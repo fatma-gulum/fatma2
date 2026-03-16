@@ -1,0 +1,182 @@
+name: sixpack30
+description: Sixpack30 Flutter uygulaması
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.4.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  flutter_riverpod: ^2.5.1
+  flutter_svg: ^2.0.10+1
+  google_fonts: ^6.2.1
+  dropdown_button2: ^2.3.9
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/splash.png
+    - assets/images/resimler/Onboarding.jpg
+    - assets/images/resimler/Onboarding2.jpg
+    - assets/images/resimler/Onboarding3.jpg
+    - assets/images/resimler/anasayfa.png
+    - assets/images/resimler/loginkadin.png
+    - assets/images/resimler/loginerkek.png
+    - assets/images/resimler/gobekeritme.jpg
+    - assets/images/resimler/karinkasiyapma.jpg
+    - assets/images/resimler/ekstravucut.jpg
+    - assets/images/resimler/ekstravucuttipi.png
+    - assets/images/resimler/bicimlivucut.jpg
+    - assets/images/resimler/paylas.jpg
+    - assets/images/resimler/paylas2.jpg
+    - assets/images/resimler/paylas3.jpg
+    - assets/images/resimler/paylas4.jpg
+    - assets/images/resimler/paylas5.jpg
+    - assets/images/resimler/paylas6.jpg
+    - assets/images/resimler/bicimlivucuttipi.png
+    - assets/images/resimler/vucut.jpg
+    - assets/images/resimler/vucudunuzubilin.jpg
+    - assets/images/resimler/Frame 6959.jpg
+    - assets/images/resimler/Frame 6959 (3).jpg
+    - assets/images/resimler/17 900.jpg
+    - assets/images/resimler/hazirmisin.jpg
+    - assets/images/resimler/3876b4113257b32207c79ea46168fee966f888e2.jpg
+    - assets/images/resimler/baslayin.jpg
+    - assets/images/resimler/bizidegerlendir.jpg
+    - assets/images/resimler/1.gun.jpg
+    - assets/images/resimler/2.gun.jpg
+    - assets/images/resimler/3.gun.jpg
+    - assets/images/resimler/4.gun.jpg
+    - assets/images/resimler/5.gun.jpg
+    - assets/images/resimler/6.gun.jpg
+    - assets/images/resimler/7.gun.jpg
+    - assets/images/resimler/8.gun.jpg
+    - assets/images/resimler/9.gun.jpg
+    - assets/images/resimler/10.gun.jpg
+    - assets/images/resimler/bentkneeleg.png
+    - assets/images/resimler/bentkneeraise.png
+    - assets/images/resimler/Ellipse 68.jpg
+    - assets/images/resimler/antrenman1.jpg
+    - assets/images/resimler/aktivasyon (2).jpg
+    - assets/images/resimler/Frame 7243.jpg
+    - assets/images/icons/iconstack.io - (Arrow Down).svg
+    - assets/images/icons/iconstack.io - (Arrow Bear Right).svg
+    - assets/images/icons/iconstack.io - (Body Weight).svg
+    - assets/images/icons/iconstack.io - (Home 24).svg
+    - assets/images/icons/Vector (1).svg
+    - assets/images/icons/Vector (2).svg
+    - assets/images/icons/Vector (3).svg
+    - assets/images/icons/Vector (4).svg
+    - assets/images/icons/Vector (5).svg
+    - assets/images/icons/Vector (6).svg
+    - assets/images/icons/Vector (7).svg
+    - assets/images/icons/Vector (8).svg
+    - assets/images/icons/Vector (9).svg
+    - assets/images/icons/Vector (10).svg
+    - assets/images/icons/Vector (11).svg
+    - assets/images/icons/Vector (12).svg
+    - assets/images/icons/Vector (13).svg
+    - assets/images/icons/Vector (16).svg
+    - assets/images/icons/Vector (17).svg
+    - assets/images/icons/Vector (18).svg
+    - assets/images/icons/Vector (19).svg
+    - assets/images/icons/Vector (20).svg
+    - assets/images/icons/iconstack.io - (Smile Plus).svg
+    - assets/images/icons/iconstack.io - (Mood Smile).svg
+    - assets/images/icons/iconstack.io - (Workout Gymnastics).svg
+    - assets/images/icons/iconstack.io - (Workout Kicking).svg
+    - assets/images/icons/iconstack.io - (Workout Run).svg
+    - assets/images/icons/iconstack.io - (Workout Squats).svg
+    - assets/images/icons/iconstack.io - (Workout Stretching).svg
+    - assets/images/icons/iconstack.io - (Workout Warm Up).svg
+    - assets/images/icons/iconstack.io - (Workout Battle Ropes).svg
+    - assets/images/icons/iconstack.io - (Alarm Plus).svg
+    - assets/images/icons/iconstack.io - (Bike).svg
+    - assets/images/icons/iconstack.io - (Bomb).svg
+    - assets/images/icons/iconstack.io - (Bulb).svg
+    - assets/images/icons/iconstack.io - (Back Muscle Body).svg
+    - assets/images/icons/iconstack.io - (Body Part Six Pack).svg
+    - assets/images/icons/iconstack.io - (Clock).svg
+    - assets/images/icons/iconstack.io - (Dumbbell Large).svg
+    - assets/images/icons/iconstack.io - (Graph Up).svg
+    - assets/images/icons/Vector (14).svg
+    - assets/images/icons/Vector (15).svg
+    - assets/images/icons/Polygon 1.svg
+    - assets/images/icons/Polygon 7.svg
+    - assets/images/icons/Polygon 8.svg
+    - assets/images/icons/Frame 6637 (1).svg
+    - assets/images/icons/Frame 6637 (2).svg
+    - assets/images/icons/Frame 6637 (3).svg
+    - assets/images/icons/Frame 6637 (4).svg
+    - assets/images/icons/Frame 6637 (5).svg
+    - assets/images/icons/Frame 6637 (6).svg
+    - assets/images/icons/Frame 6637 (7).svg
+    - assets/images/icons/Frame 6637 (8).svg
+    - assets/images/icons/Frame 6637.svg
+    - assets/images/icons/Frame 6697.svg
+    - assets/images/icons/Frame 6802.svg
+    - assets/images/icons/Frame 6802 (1).svg
+    - assets/images/icons/Frame 6802 (2).svg
+    - assets/images/icons/Frame 6802 (3).svg
+    - assets/images/icons/Frame 6802 (4).svg
+    - assets/images/icons/Frame 6952.svg
+    - assets/images/icons/Frame 7030.svg
+    - assets/images/icons/Frame 7065.svg
+    - assets/images/icons/Frame 7190.svg
+    - assets/images/icons/Frame 7231.svg
+    - assets/images/icons/Frame 7231 (1).svg
+    - assets/images/icons/Frame 7231 (2).svg
+    - assets/images/icons/Frame 7118.svg
+    - assets/images/icons/Frame 7118 (1).svg
+    - assets/images/icons/Frame 7118 (2).svg
+    - assets/images/icons/Frame 7162.svg
+    - assets/images/icons/Frame 7163.svg
+    - assets/images/icons/Frame 7119.svg
+    - assets/images/icons/Frame 7123.svg
+    - assets/images/icons/Frame 7124.svg
+    - assets/images/icons/Frame 7119 (1).svg
+    - assets/images/icons/Frame 7119 (2).svg
+    - assets/images/icons/Frame 7238.svg
+    - assets/images/icons/Frame 7302.svg
+    - assets/images/icons/Group 203.svg
+    - assets/images/icons/Clip path group.svg
+    - assets/images/icons/Clip path group (1).svg
+    - assets/images/icons/google.svg
+    - assets/images/icons/iconstack.io - (User Outline).svg
+    - assets/images/icons/iconstack.io - (User Circle Regular).svg
+    - assets/images/icons/iconstack.io - (Round Alt Arrow Right).svg
+    - assets/images/icons/iconstack.io - (Round Alt Arrow Right) (1).svg
+    - assets/images/icons/iconstack.io - (Ellipsis Vertical Outline).svg
+    - assets/images/icons/iconstack.io - (Save 2).svg
+    - assets/images/icons/iconstack.io - (Star Fill).svg
+    - assets/images/icons/Grabber.svg
+    - assets/images/icons/Ellipse 75 (1).svg
+    - assets/images/icons/Ellipse 82.svg
+    - assets/images/icons/Ellipse 76.svg
+    - assets/images/icons/Ellipse 94.svg
+    - assets/images/icons/Frame 5869.svg
+    - assets/images/icons/Frame 5869 (1).svg
+    - assets/images/icons/Frame 5869 (2).svg
+    - assets/images/icons/Frame 5869 (3).svg
+    - assets/images/icons/Group 252.svg
+    - assets/images/icons/Group 249.svg
+    - assets/images/icons/Frame 7167.svg
+    - assets/images/icons/Group 216.svg
+    - assets/images/icons/Group 218.svg
+    - assets/images/icons/Group 217.svg
+    - assets/images/icons/Line 34.svg
+    - assets/images/icons/Ellipse 63.svg
+    - assets/images/icons/Ellipse 65.svg
+    - assets/images/icons/Ellipse 91.svg
+    - assets/images/icons/Frame 7252.svg
+
