@@ -2,6 +2,7 @@ import 'dart:math' show pi;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sixpack30/Colors/app_colors.dart';
 import 'package:sixpack30/Text/font.dart';
@@ -93,102 +94,120 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: _selectedTabIndex == 3
-          ? const Color(0xFFFEFEFE)
-          : const Color(0xFFFFFFFF),
-      body: _selectedTabIndex == 1
-          ? WorkoutProgramView(
-              onBack: () => setState(() => _selectedTabIndex = 0),
-            )
-          : Center(
-        child: Container(
-          width: _selectedTabIndex == 3 ? 390 : null,
-          constraints: BoxConstraints(
-            maxWidth: 390,
-            minHeight: MediaQuery.of(context).size.height,
-          ),
-          decoration: BoxDecoration(
-            color: _selectedTabIndex == 3
-                ? const Color(0xFFFEFEFE)
-                : const Color(0xFFFFFFFF),
-          ),
-          child: SafeArea(
-            child: _selectedTabIndex == 3
-                ? SizedBox(
-                          width: 390,
-                          child: _isEditingProfile
-                              ? _buildEditProfileView()
-                              : _isNotificationsView
-                                  ? _buildNotificationsView()
-                                  : _isLanguagePreferencesView
-                                      ? _buildLanguagePreferencesView()
-                                      : _isRateUsView
-                                          ? _buildRateUsView()
-                                          : _buildProfileView(),
-                        )
-                      : _selectedTabIndex == 2
-                          ? _buildProgressView()
-                          : Column(
-                            children: [
-                              _buildHeader(),
-                              const SizedBox(height: 8),
-                              _buildCalendar(),
-                              const SizedBox(height: 16),
-                              Expanded(
-                                child: SingleChildScrollView(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 24),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Günün Antrenmanı',
-                                        style: TextStyle(
-                                          fontFamily: AppFont.montserrat,
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 16,
-                                          height: 1.0,
-                                          letterSpacing: -0.011,
-                                          color: const Color(0xFF000000),
-                                        ),
+    return WillPopScope(
+      onWillPop: () async {
+        // Ana sayfadan onboarding/loading ekranlarına geri dönmeyi engelle.
+        // İçeride bir alt ekran/sekme açıksa önce onu kapat.
+        if (_selectedTabIndex != 0) {
+          setState(() => _selectedTabIndex = 0);
+          return false;
+        }
+        if (_isEditingProfile || _isNotificationsView || _isLanguagePreferencesView || _isRateUsView) {
+          setState(() {
+            _isEditingProfile = false;
+            _isNotificationsView = false;
+            _isLanguagePreferencesView = false;
+            _isRateUsView = false;
+          });
+          return false;
+        }
+        return false; // Home'dan geri çıkma
+      },
+      child: Scaffold(
+        backgroundColor: _selectedTabIndex == 3
+            ? const Color(0xFFFEFEFE)
+            : const Color(0xFFFFFFFF),
+        body: _selectedTabIndex == 1
+            ? WorkoutProgramView(
+                onBack: () => setState(() => _selectedTabIndex = 0),
+              )
+            : Center(
+                child: Container(
+                  width: _selectedTabIndex == 3 ? 390 : null,
+                  constraints: BoxConstraints(
+                    maxWidth: 390,
+                    minHeight: MediaQuery.of(context).size.height,
+                  ),
+                  decoration: BoxDecoration(
+                    color: _selectedTabIndex == 3
+                        ? const Color(0xFFFEFEFE)
+                        : const Color(0xFFFFFFFF),
+                  ),
+                  child: SafeArea(
+                    child: _selectedTabIndex == 3
+                        ? SizedBox(
+                            width: 390,
+                            child: _isEditingProfile
+                                ? _buildEditProfileView()
+                                : _isNotificationsView
+                                    ? _buildNotificationsView()
+                                    : _isLanguagePreferencesView
+                                        ? _buildLanguagePreferencesView()
+                                        : _isRateUsView
+                                            ? _buildRateUsView()
+                                            : _buildProfileView(),
+                          )
+                        : _selectedTabIndex == 2
+                            ? _buildProgressView()
+                            : Column(
+                                children: [
+                                  _buildHeader(),
+                                  const SizedBox(height: 8),
+                                  _buildCalendar(),
+                                  const SizedBox(height: 16),
+                                  Expanded(
+                                    child: SingleChildScrollView(
+                                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Günün Antrenmanı',
+                                            style: TextStyle(
+                                              fontFamily: AppFont.montserrat,
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 16,
+                                              height: 1.0,
+                                              letterSpacing: -0.011,
+                                              color: const Color(0xFF000000),
+                                            ),
+                                          ),
+                                          const SizedBox(height: 12),
+                                          _buildTodayWorkoutCard(),
+                                          const SizedBox(height: 24),
+                                          _buildContinueSection(),
+                                          const SizedBox(height: 24),
+                                          _buildTodayTrainingProgressCard(),
+                                          const SizedBox(height: 24),
+                                          _buildCompletedDaysSection(),
+                                          const SizedBox(height: 16),
+                                          _buildPremiumSection(),
+                                          const SizedBox(height: 16),
+                                          _buildProgressSection(),
+                                          const SizedBox(height: 16),
+                                          _buildStatsSection(
+                                            includePerformanceProgressBlock: false,
+                                            includeBigCards: false,
+                                            includeSmallCards: false,
+                                          ),
+                                          const SizedBox(height: 24),
+                                        ],
                                       ),
-                                      const SizedBox(height: 12),
-                                      _buildTodayWorkoutCard(),
-                                      const SizedBox(height: 24),
-                                      _buildContinueSection(),
-                                      const SizedBox(height: 24),
-                                      _buildTodayTrainingProgressCard(),
-                                      const SizedBox(height: 24),
-                                      _buildCompletedDaysSection(),
-                                      const SizedBox(height: 16),
-                                      _buildPremiumSection(),
-                                      const SizedBox(height: 16),
-                                      _buildProgressSection(),
-                                      const SizedBox(height: 16),
-                                      _buildStatsSection(
-                                          includePerformanceProgressBlock:
-                                              false,
-                                          includeBigCards: false,
-                                          includeSmallCards: false),
-                                      const SizedBox(height: 24),
-                                    ],
+                                    ),
                                   ),
-                                ),
+                                ],
                               ),
-                            ],
-                          ),
-          ),
-        ),
+                  ),
+                ),
+              ),
+        bottomNavigationBar: _selectedTabIndex == 3 &&
+                (_isEditingProfile ||
+                    _isNotificationsView ||
+                    _isLanguagePreferencesView ||
+                    _isRateUsView)
+            ? null
+            : _buildBottomNavBar(),
       ),
-      bottomNavigationBar: _selectedTabIndex == 3 &&
-              (_isEditingProfile ||
-                  _isNotificationsView ||
-                  _isLanguagePreferencesView ||
-                  _isRateUsView)
-          ? null
-          : _buildBottomNavBar(),
     );
   }
 
@@ -227,7 +246,7 @@ class _HomeViewState extends State<HomeView> {
                   height: 30,
                   child: Center(
                     child: Text(
-                      'Profil',
+                      'Profil'.tr(),
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: AppFont.montserrat,
@@ -274,7 +293,7 @@ class _HomeViewState extends State<HomeView> {
             width: 342,
             height: 30,
             child: Text(
-              'Hesap Ayarları',
+              'Hesap Ayarları'.tr(),
               style: TextStyle(
                 fontFamily: AppFont.montserrat,
                 fontWeight: FontWeight.w700,
@@ -291,7 +310,7 @@ class _HomeViewState extends State<HomeView> {
             children: [
               _buildProfileRow(
                 Icons.person_outline,
-                'Profili Düzenle',
+                'Profili Düzenle'.tr(),
                 leadingSvgAsset: _profileEditIcon,
                 trailingSvgAsset: _profileArrowIcon,
                 darkTextStyle: true,
@@ -302,7 +321,7 @@ class _HomeViewState extends State<HomeView> {
               _buildProfileDivider(),
               _buildProfileRow(
                 Icons.notifications_outlined,
-                'Bildirimler',
+                'Bildirimler'.tr(),
                 leadingSvgAsset: _profileNotificationsIcon,
                 trailingSvgAsset: _profileArrowIcon,
                 darkTextStyle: true,
@@ -311,7 +330,7 @@ class _HomeViewState extends State<HomeView> {
                 }),
               ),
               _buildProfileDivider(),
-              _buildProfileRow(Icons.workspace_premium_outlined, 'Premium', leadingSvgAsset: _profilePremiumIcon, trailingSvgAsset: _profileArrowIcon, darkTextStyle: true),
+              _buildProfileRow(Icons.workspace_premium_outlined, 'Premium'.tr(), leadingSvgAsset: _profilePremiumIcon, trailingSvgAsset: _profileArrowIcon, darkTextStyle: true),
             ],
           ),
           const SizedBox(height: 24),
@@ -319,7 +338,7 @@ class _HomeViewState extends State<HomeView> {
             width: 342,
             height: 30,
             child: Text(
-              'Destek & Diğer',
+              'Destek & Diğer'.tr(),
               style: TextStyle(
                 fontFamily: AppFont.montserrat,
                 fontWeight: FontWeight.w700,
@@ -335,7 +354,7 @@ class _HomeViewState extends State<HomeView> {
             children: [
               _buildProfileRow(
                 Icons.favorite_outline,
-                'App Sağlık ile Bağlan',
+                'App Sağlık ile Bağlan'.tr(),
                 leadingSvgAsset: _profileHealthAppIcon,
                 isSwitch: true,
                 darkTextStyle: true,
@@ -345,7 +364,7 @@ class _HomeViewState extends State<HomeView> {
               _buildProfileDivider(),
               _buildProfileRow(
                 Icons.language,
-                'Dil Tercihleri',
+                'Dil Tercihleri'.tr(),
                 leadingSvgAsset: _profileLanguageIcon,
                 trailingSvgAsset: _profileArrowIcon,
                 darkTextStyle: true,
@@ -356,7 +375,7 @@ class _HomeViewState extends State<HomeView> {
               _buildProfileDivider(),
               _buildProfileRow(
                 Icons.help_outline,
-                'Sıkça Sorulan Sorular',
+                'Sıkça Sorulan Sorular'.tr(),
                 leadingSvgAsset: _profileFaqIcon,
                 trailingSvgAsset: _profileArrowIcon,
                 darkTextStyle: true,
@@ -369,7 +388,7 @@ class _HomeViewState extends State<HomeView> {
               _buildProfileDivider(),
               _buildProfileRow(
                 Icons.star_outline,
-                'Bizi Değerlendir',
+                'Bizi Değerlendir'.tr(),
                 leadingSvgAsset: _profileRateUsIcon,
                 trailingSvgAsset: _profileArrowIcon,
                 darkTextStyle: true,
@@ -380,7 +399,7 @@ class _HomeViewState extends State<HomeView> {
               _buildProfileDivider(),
               _buildProfileRow(
                 Icons.share_outlined,
-                'Uygulamayı Paylaş',
+                'Uygulamayı Paylaş'.tr(),
                 leadingSvgAsset: _profileShareAppIcon,
                 trailingSvgAsset: _profileArrowIcon,
                 darkTextStyle: true,
@@ -393,7 +412,7 @@ class _HomeViewState extends State<HomeView> {
               _buildProfileDivider(),
               _buildProfileRow(
                 Icons.logout,
-                'Çıkış Yap',
+                'Çıkış Yap'.tr(),
                 isLogout: true,
                 onTap: () {
                   Navigator.of(context).pushAndRemoveUntil(
@@ -454,7 +473,7 @@ class _HomeViewState extends State<HomeView> {
                       height: 30,
                       child: Center(
                         child: Text(
-                          'İlerleme',
+                          'İlerleme'.tr(),
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: AppFont.montserrat,
@@ -474,7 +493,7 @@ class _HomeViewState extends State<HomeView> {
               const SizedBox(height: 16),
               // Günün Antrenmanı başlığı ve kartı
               Text(
-                'Günün Antrenmanı',
+                'Günün Antrenmanı'.tr(),
                 style: TextStyle(
                   fontFamily: AppFont.montserrat,
                   fontWeight: FontWeight.w700,
@@ -492,7 +511,7 @@ class _HomeViewState extends State<HomeView> {
                 width: 342,
                 height: 20,
                 child: Text(
-                  'Antrenman Özeti',
+                  'Antrenman Özeti'.tr(),
                   textAlign: TextAlign.left,
                   style: TextStyle(
                     fontFamily: AppFont.montserrat,
@@ -512,7 +531,7 @@ class _HomeViewState extends State<HomeView> {
                 width: 342,
                 height: 20,
                 child: Text(
-                  'Performans & İlerleme',
+                  'Performans & İlerleme'.tr(),
                   style: TextStyle(
                     fontFamily: AppFont.montserrat,
                     fontWeight: FontWeight.w700,
@@ -623,7 +642,7 @@ class _HomeViewState extends State<HomeView> {
                   width: 88,
                   height: 17,
                   child: Text(
-                    'Adım',
+                    'Adım'.tr(),
                     style: TextStyle(
                       fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w600,
@@ -693,7 +712,7 @@ class _HomeViewState extends State<HomeView> {
                                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                                   ),
                                   child: Text(
-                                    'Hedef seç',
+                                    'Hedef seç'.tr(),
                                     style: TextStyle(
                                       fontFamily: 'Montserrat',
                                       fontWeight: FontWeight.w500,
@@ -737,7 +756,7 @@ class _HomeViewState extends State<HomeView> {
               width: 88,
               height: 17,
               child: Text(
-                'Su iç',
+                'Su iç'.tr(),
                 style: TextStyle(
                   fontFamily: 'Montserrat',
                   fontWeight: FontWeight.w600,
@@ -845,7 +864,7 @@ class _HomeViewState extends State<HomeView> {
           Padding(
             padding: const EdgeInsets.only(left: 4, bottom: 12),
             child: Text(
-              'Harika Gidiyorsun 🎉',
+              'Harika Gidiyorsun 🎉'.tr(),
               style: TextStyle(
                 fontFamily: AppFont.montserrat,
                 fontWeight: FontWeight.w500,
@@ -895,7 +914,7 @@ class _HomeViewState extends State<HomeView> {
                   width: 71,
                   height: 12,
                   child: Text(
-                    'Günlük Seri',
+                    'Günlük Seri'.tr(),
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: AppFont.montserrat,
@@ -1431,18 +1450,18 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  static const List<Map<String, String>> _languageOptions = [
-    {'flag': '🇺🇸', 'name': 'İngilizce'},
-    {'flag': '🇹🇷', 'name': 'Türkçe'},
-    {'flag': '🇪🇸', 'name': 'İspanyolca'},
-    {'flag': '🇵🇹', 'name': 'Portekizce'},
-    {'flag': '🇫🇷', 'name': 'Fransızca'},
-    {'flag': '🇮🇹', 'name': 'İtalyanca'},
-    {'flag': '🇩🇪', 'name': 'Almanca'},
-    {'flag': '🇷🇺', 'name': 'Rusça'},
-    {'flag': '🇯🇵', 'name': 'Japonca'},
-    {'flag': '🇰🇷', 'name': 'Korece'},
-    {'flag': '🇮🇳', 'name': 'Hintçe'},
+  static const List<Map<String, dynamic>> _languageOptions = [
+    {'flag': '🇺🇸', 'name': 'English', 'locale': Locale('en', 'US')},
+    {'flag': '🇹🇷', 'name': 'Türkçe', 'locale': Locale('tr', 'TR')},
+    {'flag': '🇪🇸', 'name': 'Español', 'locale': Locale('es', 'ES')},
+    {'flag': '🇵🇹', 'name': 'Português', 'locale': Locale('pt', 'PT')},
+    {'flag': '🇫🇷', 'name': 'Français', 'locale': Locale('fr', 'FR')},
+    {'flag': '🇮🇹', 'name': 'Italiano', 'locale': Locale('it', 'IT')},
+    {'flag': '🇩🇪', 'name': 'Deutsch', 'locale': Locale('de', 'DE')},
+    {'flag': '🇷🇺', 'name': 'Русский', 'locale': Locale('ru', 'RU')},
+    {'flag': '🇯🇵', 'name': '日本語', 'locale': Locale('ja', 'JP')},
+    {'flag': '🇰🇷', 'name': '한국어', 'locale': Locale('ko', 'KR')},
+    {'flag': '🇮🇳', 'name': 'हिन्दी', 'locale': Locale('hi', 'IN')},
   ];
 
   Widget _buildRateUsView() {
@@ -1736,7 +1755,7 @@ class _HomeViewState extends State<HomeView> {
                     height: 30,
                     child: Center(
                       child: Text(
-                        'Dil Tercihleri',
+                        'Dil Tercihleri'.tr(),
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: AppFont.montserrat,
@@ -1796,13 +1815,13 @@ class _HomeViewState extends State<HomeView> {
                                     child: Row(
                                       children: [
                                         Text(
-                                          lang['flag']!,
+                                          lang['flag'] as String,
                                           style: const TextStyle(fontSize: 24),
                                         ),
                                         const SizedBox(width: 12),
                                         Expanded(
                                           child: Text(
-                                            lang['name']!,
+                                            lang['name'] as String,
                                             style: TextStyle(
                                               fontFamily: AppFont.montserrat,
                                               fontWeight: FontWeight.w500,
@@ -1831,9 +1850,16 @@ class _HomeViewState extends State<HomeView> {
               width: 342,
               height: 44,
               child: ElevatedButton.icon(
-                onPressed: () => setState(() {
-                  _isLanguagePreferencesView = false;
-                }),
+                onPressed: () async {
+                  final selected = _languageOptions[_selectedLanguageIndex];
+                  final locale = selected['locale'] as Locale;
+                  await context.setLocale(locale);
+                  if (mounted) {
+                    setState(() {
+                      _isLanguagePreferencesView = false;
+                    });
+                  }
+                },
                 icon: SizedBox(
                   width: 24,
                   height: 24,
@@ -1853,7 +1879,7 @@ class _HomeViewState extends State<HomeView> {
                   height: 20,
                   child: Center(
                     child: Text(
-                      'Kaydet',
+                      'Kaydet'.tr(),
                       style: TextStyle(
                         fontFamily: AppFont.montserrat,
                         fontWeight: FontWeight.w500,
@@ -2759,7 +2785,7 @@ class _HomeViewState extends State<HomeView> {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Hoşgeldin Sinem',
+                    'Hoşgeldin Sinem'.tr(),
                     style: const TextStyle(
                       fontFamily: AppFont.montserrat,
                       fontWeight: FontWeight.w700,
@@ -2896,7 +2922,7 @@ class _HomeViewState extends State<HomeView> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          'Aktivasyon',
+                          'Aktivasyon'.tr(),
                           style: TextStyle(
                             fontFamily: AppFont.montserrat,
                             fontWeight: FontWeight.w700,
@@ -2914,22 +2940,22 @@ class _HomeViewState extends State<HomeView> {
                             _buildChipWithIcon(
                               iconPath:
                                   'assets/images/icons/iconstack.io - (Back Muscle Body).svg',
-                              label: '8 Egzersiz',
+                              label: '8 Egzersiz'.tr(),
                             ),
                             _buildChipWithIcon(
                               iconPath:
                                   'assets/images/icons/iconstack.io - (Dumbbell Large).svg',
-                              label: 'Bölge: Karın',
+                              label: 'Bölge: Karın'.tr(),
                             ),
                             _buildChipWithIcon(
                               iconPath:
                                   'assets/images/icons/iconstack.io - (Clock).svg',
-                              label: '30 Dakika',
+                              label: '30 Dakika'.tr(),
                             ),
                             _buildChipWithIcon(
                               iconPath:
                                   'assets/images/icons/Vector (17).svg',
-                              label: '250 Kcal',
+                              label: '250 Kcal'.tr(),
                             ),
                           ],
                         ),
@@ -3020,7 +3046,7 @@ class _HomeViewState extends State<HomeView> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Kaldığın Yerden Devam Et',
+          'Kaldığın Yerden Devam Et'.tr(),
           style: TextStyle(
             fontFamily: AppFont.montserrat,
             fontWeight: FontWeight.w700,
@@ -3585,7 +3611,7 @@ class _HomeViewState extends State<HomeView> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Tamamlanan Günler',
+          'Tamamlanan Günler'.tr(),
           style: TextStyle(
             fontFamily: AppFont.montserrat,
             fontWeight: FontWeight.w700,
@@ -3619,7 +3645,7 @@ class _HomeViewState extends State<HomeView> {
                 Row(
                   children: [
                     Text(
-                      'Tamamlanan Günler',
+                      'Tamamlanan Günler'.tr(),
                       style: TextStyle(
                         fontFamily: AppFont.montserrat,
                         fontWeight: FontWeight.w600,
@@ -5070,7 +5096,7 @@ class _HomeViewState extends State<HomeView> {
                       ),
                     ),
                   ),
-                  label: 'Anasayfa',
+                  label: 'Anasayfa'.tr(),
                 ),
                 BottomNavigationBarItem(
                   icon: Opacity(
@@ -5099,7 +5125,7 @@ class _HomeViewState extends State<HomeView> {
                       ),
                     ),
                   ),
-                  label: 'Antrenman',
+                  label: 'Antrenman'.tr(),
                 ),
                 BottomNavigationBarItem(
                   icon: Opacity(
@@ -5128,7 +5154,7 @@ class _HomeViewState extends State<HomeView> {
                       ),
                     ),
                   ),
-                  label: 'İlerleme',
+                  label: 'İlerleme'.tr(),
                 ),
                 BottomNavigationBarItem(
                   icon: Opacity(
@@ -5157,7 +5183,7 @@ class _HomeViewState extends State<HomeView> {
                       ),
                     ),
                   ),
-                  label: 'Profil',
+                  label: 'Profil'.tr(),
                 ),
               ],
             ),

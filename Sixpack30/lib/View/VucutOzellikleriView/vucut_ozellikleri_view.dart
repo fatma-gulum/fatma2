@@ -54,7 +54,8 @@ class _VucutOzellikleriViewState extends State<VucutOzellikleriView> {
     if (!_rulerScrollController.hasClients) return;
     final pos = _rulerScrollController.position;
     final vh = pos.viewportDimension;
-    final off = _rulerScrollController.offset + vh / 2;
+    // HeightRuler üst/alt vh/2 padding ekliyor; seçimi gerçek tick alanına göre hesapla.
+    final off = _rulerScrollController.offset + vh / 2 - (vh / 2);
     final idx = (off / heightRulerTickSpacingPx)
         .round()
         .clamp(0, BodyMeasureConstants.maxHeightCm - BodyMeasureConstants.minHeightCm);
@@ -66,7 +67,8 @@ class _VucutOzellikleriViewState extends State<VucutOzellikleriView> {
     if (!_weightScrollController.hasClients) return;
     final pos = _weightScrollController.position;
     final vw = pos.viewportDimension;
-    final off = _weightScrollController.offset + vw / 2;
+    // WeightRuler sağ/sol vw/2 padding ekliyor; seçimi gerçek tick alanına göre hesapla.
+    final off = _weightScrollController.offset;
     final idx = (off / weightRulerTickSpacingPx)
         .round()
         .clamp(0, (BodyMeasureConstants.maxWeightKg - BodyMeasureConstants.minWeightKg).round());
@@ -80,7 +82,8 @@ class _VucutOzellikleriViewState extends State<VucutOzellikleriView> {
     if (!_targetWeightScrollController.hasClients) return;
     final pos = _targetWeightScrollController.position;
     final vw = pos.viewportDimension;
-    final off = _targetWeightScrollController.offset + vw / 2;
+    // WeightRuler sağ/sol vw/2 padding ekliyor; seçimi gerçek tick alanına göre hesapla.
+    final off = _targetWeightScrollController.offset;
     final range = (BodyMeasureConstants.maxTargetWeightKg - BodyMeasureConstants.minTargetWeightKg).round();
     final idx = (off / weightRulerTickSpacingPx).round().clamp(0, range);
     final v = BodyMeasureConstants.minTargetWeightKg + idx;

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:sixpack30/Colors/app_colors.dart';
 import 'package:sixpack30/Components/Buttons/primary_button.dart';
 import 'package:sixpack30/View/LoginAndroidView/login_android_view.dart';
@@ -84,7 +85,7 @@ class Splash2View extends StatelessWidget {
                 height: skipHeight,
                 child: Center(
                   child: Text(
-                    'Atla',
+                    'Atla'.tr(),
                     style: TextStyle(
                       fontFamily: AppFont.montserrat,
                       fontWeight: FontWeight.w500,
@@ -108,7 +109,7 @@ class Splash2View extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '30 Günde',
+                      '30 Günde'.tr(),
                       style: TextStyle(
                         fontFamily: AppFont.montserrat,
                         fontWeight: FontWeight.w700,
@@ -120,7 +121,7 @@ class Splash2View extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Karın Kasına Giden Yol',
+                      'Karın Kasına Giden Yol'.tr(),
                       style: TextStyle(
                         fontFamily: AppFont.montserrat,
                         fontWeight: FontWeight.w700,
@@ -132,7 +133,7 @@ class Splash2View extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      'SixPack30, karın kaslarını görünür hale getirmek için özel olarak tasarlanmış 30 günlük ev egzersiz programı sunar.\nEkipmansız, kısa ve etkili.',
+                      'SixPack30, karın kaslarını görünür hale getirmek için özel olarak tasarlanmış 30 günlük ev egzersiz programı sunar.\nEkipmansız, kısa ve etkili.'.tr(),
                       style: TextStyle(
                         fontFamily: AppFont.montserrat,
                         fontWeight: FontWeight.w500,
@@ -156,7 +157,7 @@ class Splash2View extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: PrimaryButton(
-                        label: 'Devam Et',
+                        label: 'Devam Et'.tr(),
                         width: 342,
                         height: 44,
                         borderRadius: 10,

@@ -64,9 +64,12 @@ class _WeightRulerState extends State<WeightRuler> {
     final kgRounded = kg.round().toDouble().clamp(widget.minKg, widget.maxKg);
     final idx = (kgRounded - widget.minKg).round();
     final tickX = idx * weightRulerTickSpacingPx;
-    final totalW = (widget.maxKg - widget.minKg) * weightRulerTickSpacingPx;
+    final tickAreaW = (widget.maxKg - widget.minKg) * weightRulerTickSpacingPx;
+    final pad = vw / 2;
+    final totalW = tickAreaW + pad * 2;
     final maxOff = (totalW - vw).clamp(0.0, double.infinity);
-    final t = (tickX - vw / 2).clamp(0.0, maxOff);
+    // Sağ/sol vw/2 padding var; seçili çizgiyi ortalamak için direkt tickX yeterli.
+    final t = tickX.clamp(0.0, maxOff);
     if ((widget.scrollController.offset - t).abs() > 1) {
       widget.scrollController.jumpTo(t);
     }
@@ -74,11 +77,13 @@ class _WeightRulerState extends State<WeightRuler> {
 
   @override
   Widget build(BuildContext context) {
-    final totalWidth = (widget.maxKg - widget.minKg) * weightRulerTickSpacingPx;
+    final tickAreaWidth = (widget.maxKg - widget.minKg) * weightRulerTickSpacingPx;
 
     return LayoutBuilder(
       builder: (_, constraints) {
         final h = constraints.maxHeight;
+        final pad = constraints.maxWidth / 2;
+        final totalWidth = tickAreaWidth + pad * 2;
         return Stack(
           children: [
             SizedBox(
@@ -90,13 +95,23 @@ class _WeightRulerState extends State<WeightRuler> {
                 child: SizedBox(
                   width: totalWidth,
                   height: h,
-                  child: CustomPaint(
-                    size: Size(totalWidth, h),
-                    painter: _WeightRulerPainter(
-                      minKg: widget.minKg,
-                      maxKg: widget.maxKg,
-                      weightUnit: widget.weightUnit,
-                    ),
+                  child: Row(
+                    children: [
+                      SizedBox(width: pad),
+                      SizedBox(
+                        width: tickAreaWidth,
+                        height: h,
+                        child: CustomPaint(
+                          size: Size(tickAreaWidth, h),
+                          painter: _WeightRulerPainter(
+                            minKg: widget.minKg,
+                            maxKg: widget.maxKg,
+                            weightUnit: widget.weightUnit,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: pad),
+                    ],
                   ),
                 ),
               ),

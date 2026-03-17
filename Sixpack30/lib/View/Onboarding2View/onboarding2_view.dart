@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:sixpack30/Colors/app_colors.dart';
 import 'package:sixpack30/Components/Buttons/primary_button.dart';
 import 'package:sixpack30/View/LoginAndroidView/login_android_view.dart';
@@ -85,7 +86,7 @@ class Splash3View extends StatelessWidget {
                 height: skipHeight,
                 child: Center(
                   child: Text(
-                    'Atla',
+                    'Atla'.tr(),
                     style: TextStyle(
                       fontFamily: AppFont.montserrat,
                       fontWeight: FontWeight.w500,
@@ -109,7 +110,7 @@ class Splash3View extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Her Seviyeye Uygun',
+                      'Her Seviyeye Uygun'.tr(),
                       style: TextStyle(
                         fontFamily: AppFont.montserrat,
                         fontWeight: FontWeight.w700,
@@ -121,7 +122,7 @@ class Splash3View extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Akıllı Program',
+                      'Akıllı Program'.tr(),
                       style: TextStyle(
                         fontFamily: AppFont.montserrat,
                         fontWeight: FontWeight.w700,
@@ -133,7 +134,7 @@ class Splash3View extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      'Yapay zekâ, güç seviyeni analiz eder\nve günlük antrenman yoğunluğunu\nsana göre ayarlar. Ne kadar ilerlersen,\nprogram seninle birlikte gelişir',
+                      'Yapay zekâ, güç seviyeni analiz eder\nve günlük antrenman yoğunluğunu\nsana göre ayarlar. Ne kadar ilerlersen,\nprogram seninle birlikte gelişir'.tr(),
                       style: TextStyle(
                         fontFamily: AppFont.montserrat,
                         fontWeight: FontWeight.w500,
@@ -157,7 +158,7 @@ class Splash3View extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: PrimaryButton(
-                        label: 'Devam Et',
+                        label: 'Devam Et'.tr(),
                         width: 342,
                         height: 44,
                         borderRadius: 10,

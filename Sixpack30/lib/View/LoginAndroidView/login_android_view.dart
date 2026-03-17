@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:sixpack30/Colors/app_colors.dart';
 import 'package:sixpack30/View/HedefOdakView/hedef_odak_view.dart'; // Onboarding1View
 import 'package:sixpack30/Text/font.dart';
@@ -42,10 +43,10 @@ class LoginAndroidView extends StatelessWidget {
                     ),
                     const SizedBox(height: 24),
                     const SizedBox(height: 16),
-                    const Text(
-                      'Hoşgeldin',
+                    Text(
+                      'Hoşgeldin'.tr(),
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontFamily: AppFont.manrope,
                         fontWeight: FontWeight.w700,
                         fontSize: 32,
@@ -56,7 +57,7 @@ class LoginAndroidView extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Seni tekrar görmek güzel! Giriş yaparak\nter dökmeye hazır mısın?',
+                      'Seni tekrar görmek güzel! Giriş yaparak\nter dökmeye hazır mısın?'.tr(),
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: AppFont.primary,
@@ -72,7 +73,7 @@ class LoginAndroidView extends StatelessWidget {
                       child: SizedBox(
                         width: 342,
                         child: _SocialButton(
-                          label: 'Google ile giriş yapın',
+                          label: 'Google ile giriş yapın'.tr(),
                           leadingIconPath:
                               'assets/images/icons/google.svg',
                           height: 44,
@@ -95,7 +96,7 @@ class LoginAndroidView extends StatelessWidget {
                           children: [
                             Expanded(
                               child: _SocialButton(
-                                label: 'Apple',
+                                label: 'Apple'.tr(),
                                 leadingIconPath:
                                     'assets/images/icons/Vector (1).svg',
                                 height: 44,
@@ -112,7 +113,7 @@ class LoginAndroidView extends StatelessWidget {
                             const SizedBox(width: 8),
                             Expanded(
                               child: _SocialButton(
-                                label: 'Facebook',
+                                label: 'Facebook'.tr(),
                                 leadingIconPath:
                                     'assets/images/icons/Vector (2).svg',
                                 height: 44,
@@ -149,8 +150,8 @@ class LoginAndroidView extends StatelessWidget {
                             height: 18,
                           ),
                           const SizedBox(width: 8),
-                          const Text(
-                            'Misafir Olarak Devam Et',
+                          Text(
+                            'Misafir Olarak Devam Et'.tr(),
                             style: TextStyle(
                               fontFamily: AppFont.primary,
                               fontWeight: FontWeight.w600,
@@ -303,34 +304,27 @@ class _TermsTextState extends State<_TermsText> {
       text: TextSpan(
         style: baseStyle,
         children: [
-          const TextSpan(
-            text: 'SixPack30’ a kaydolmakla ',
-          ),
+          TextSpan(text: 'SixPack30’ a kaydolmakla '.tr()),
           TextSpan(
-            text: 'Hizmet Şartlarımızı',
+            text: 'Hizmet Şartlarımızı'.tr(),
             style: linkStyle,
             recognizer: _termsRecognizer,
           ),
-          const TextSpan(
-            text:
-                ' kabul etmiş olursunuz. Verilerinizi nasıl işlediğimiz hakkında daha fazla bilgi edinmek için ',
+          TextSpan(
+            text: ' kabul etmiş olursunuz. Verilerinizi nasıl işlediğimiz hakkında daha fazla bilgi edinmek için '.tr(),
           ),
           TextSpan(
-            text: 'Gizlilik Politikamızı',
+            text: 'Gizlilik Politikamızı'.tr(),
             style: linkStyle,
             recognizer: _privacyRecognizer,
           ),
-          const TextSpan(
-            text: ' ve ',
-          ),
+          TextSpan(text: ' ve '.tr()),
           TextSpan(
-            text: 'Çerez Politikamızı',
+            text: 'Çerez Politikamızı'.tr(),
             style: linkStyle,
             recognizer: _cookiesRecognizer,
           ),
-          const TextSpan(
-            text: ' inceleyiniz.',
-          ),
+          TextSpan(text: ' inceleyiniz.'.tr()),
         ],
       ),
     );

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:sixpack30/Colors/app_colors.dart';
 import 'package:sixpack30/Components/Buttons/primary_button.dart';
 import 'package:sixpack30/View/LoginAndroidView/login_android_view.dart';
@@ -40,7 +41,7 @@ class Splash4View extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Günde Sadece',
+                      'Günde Sadece'.tr(),
                       style: TextStyle(
                         fontFamily: AppFont.montserrat,
                         fontWeight: FontWeight.w700,
@@ -52,7 +53,7 @@ class Splash4View extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      '10 Dakika',
+                      '10 Dakika'.tr(),
                       style: TextStyle(
                         fontFamily: AppFont.montserrat,
                         fontWeight: FontWeight.w700,
@@ -64,7 +65,7 @@ class Splash4View extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      'Kısa ama hedefe odaklı antrenmanlar\nile core gücünü artır. Her gün bir\nadım at, 30 gün sonra sonuçları\naaynada gör.',
+                      'Kısa ama hedefe odaklı antrenmanlar\nile core gücünü artır. Her gün bir\nadım at, 30 gün sonra sonuçları\naaynada gör.'.tr(),
                       style: TextStyle(
                         fontFamily: AppFont.montserrat,
                         fontWeight: FontWeight.w500,
@@ -88,7 +89,7 @@ class Splash4View extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: PrimaryButton(
-                        label: 'Başlayın',
+                        label: 'Başlayın'.tr(),
                         width: 342,
                         height: 44,
                         borderRadius: 10,

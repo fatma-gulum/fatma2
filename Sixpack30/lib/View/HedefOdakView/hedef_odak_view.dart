@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:sixpack30/riverpod/providers/all_providers.dart';
 import 'package:sixpack30/View/VucutView/vucut_view.dart'; // Onboarding2View
 import 'package:sixpack30/View/VucutOzellikleriView/vucut_ozellikleri_view.dart';
@@ -31,6 +32,12 @@ class _Onboarding1ViewState extends ConsumerState<Onboarding1View> {
   String? _selectedGender; // 'kadin' | 'erkek' | 'none' | null
   String? _selectedGoal; // 'gobek' | 'karin' | null
   int _bodyTypeIndex = 4; // 0..5, Biçimli=0, Ekstra=5, default 5th dot
+
+  double _hairlineBorderWidth(BuildContext context) {
+    final dpr = MediaQuery.devicePixelRatioOf(context);
+    if (dpr <= 0) return 1.0;
+    return 1.0 / dpr;
+  }
 
   /// Adım 3: Mevcut vücut tipi görseli — cinsiyete göre
   String get _step3BodyImagePath {
@@ -128,7 +135,7 @@ class _Onboarding1ViewState extends ConsumerState<Onboarding1View> {
                         height: 24,
                         child: Center(
                           child: Text(
-                            'Hedef & Odak',
+                            'Hedef & Odak'.tr(),
                             textAlign: TextAlign.center,
                             style: AppTextStyles.screenHeader,
                           ),
@@ -190,47 +197,53 @@ class _Onboarding1ViewState extends ConsumerState<Onboarding1View> {
                   ),
                   const SizedBox(height: 32),
                   if (_step == 1) ...[
-                    const SizedBox(
+                    SizedBox(
                       width: 343,
                       height: 22,
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          'Cinsiyetiniz nedir?',
+                          'Cinsiyetiniz nedir?'.tr(),
                           style: AppTextStyles.questionTitle,
                         ),
                       ),
                     ),
                     const SizedBox(height: 24),
-                    Center(
+                    SizedBox(
+                      height: 240,
                       child: Row(
-                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          _GenderCard(
-                          label: 'Kadın',
-                          isSelected: _selectedGender == 'kadin',
-                          imagePath: 'assets/images/resimler/kadın.jpeg',
-                          imageAlignment: Alignment(0, -0.1),
-                          imageScale: 1.0,
-                          imageHeightFactor: null,
-                          unselectedBorderColor: const Color(0xFF969A9D),
-                          onTap: () {
-                            ref.read(selectedGenderProvider.notifier).state = 'kadin';
-                            setState(() => _selectedGender = 'kadin');
-                          },
+                          Expanded(
+                            child: _GenderCard(
+                              label: 'Kadın',
+                              isSelected: _selectedGender == 'kadin',
+                              imagePath: 'assets/images/resimler/kadın.jpeg',
+                              imageAlignment: Alignment(0, -0.1),
+                              imageScale: 1.0,
+                              imageHeightFactor: null,
+                              unselectedBorderColor: const Color(0xFF969A9D),
+                              borderWidth: _hairlineBorderWidth(context) * 0.75,
+                              onTap: () {
+                                ref.read(selectedGenderProvider.notifier).state = 'kadin';
+                                setState(() => _selectedGender = 'kadin');
+                              },
+                            ),
                           ),
                           const SizedBox(width: 12),
-                          _GenderCard(
-                            label: 'Erkek',
-                            isSelected: _selectedGender == 'erkek',
-                            imagePath: 'assets/images/resimler/erkek.jpeg',
-                            imageAlignment: Alignment.center,
-                            imageScale: 1.0,
-                            imageHeightFactor: null,
-                            onTap: () {
-                            ref.read(selectedGenderProvider.notifier).state = 'erkek';
-                            setState(() => _selectedGender = 'erkek');
-                          },
+                          Expanded(
+                            child: _GenderCard(
+                              label: 'Erkek',
+                              isSelected: _selectedGender == 'erkek',
+                              imagePath: 'assets/images/resimler/erkek.jpeg',
+                              imageAlignment: Alignment.center,
+                              imageScale: 1.0,
+                              imageHeightFactor: null,
+                              borderWidth: _hairlineBorderWidth(context) * 0.75,
+                              onTap: () {
+                                ref.read(selectedGenderProvider.notifier).state = 'erkek';
+                                setState(() => _selectedGender = 'erkek');
+                              },
+                            ),
                           ),
                         ],
                       ),
@@ -251,6 +264,7 @@ class _Onboarding1ViewState extends ConsumerState<Onboarding1View> {
                             color: _selectedGender == 'none'
                                 ? const Color(0xFF06C44F)
                                 : const Color(0xFFD7D7D7),
+                            width: _hairlineBorderWidth(context),
                           ),
                           color: Colors.white,
                         ),
@@ -270,7 +284,7 @@ class _Onboarding1ViewState extends ConsumerState<Onboarding1View> {
                             ),
                             const SizedBox(width: 8),
                             Text(
-                              'Belirtmek istemiyorum',
+                              'Belirtmek istemiyorum'.tr(),
                               style: TextStyle(
                                 fontFamily: AppFont.primary,
                                 fontWeight: FontWeight.w500,
@@ -288,20 +302,20 @@ class _Onboarding1ViewState extends ConsumerState<Onboarding1View> {
                     ),
                   ],
                   if (_step == 2) ...[
-                    const SizedBox(
+                    SizedBox(
                       width: 343,
                       height: 22,
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          'Ana hedefiniz nedir?',
+                          'Ana hedefiniz nedir?'.tr(),
                           style: AppTextStyles.questionTitle,
                         ),
                       ),
                     ),
                     const SizedBox(height: 24),
                     _GoalCard(
-                      label: 'Göbek Eritme',
+                      label: 'Göbek Eritme'.tr(),
                       imagePath: 'assets/images/resimler/gobekeritme.jpg',
                       isSelected: _selectedGoal == 'gobek',
                       onTap: () => setState(() => _selectedGoal = 'gobek'),
@@ -314,7 +328,7 @@ class _Onboarding1ViewState extends ConsumerState<Onboarding1View> {
                     ),
                     const SizedBox(height: 12),
                     _GoalCard(
-                      label: 'Karın Kası Yapma',
+                      label: 'Karın Kası Yapma'.tr(),
                       imagePath: 'assets/images/resimler/karinkasiyapma.jpg',
                       isSelected: _selectedGoal == 'karin',
                       onTap: () => setState(() => _selectedGoal = 'karin'),
@@ -348,8 +362,8 @@ class _Onboarding1ViewState extends ConsumerState<Onboarding1View> {
                               alignment: Alignment.centerLeft,
                               child: Text(
                                 _step == 3
-                                    ? 'Vücut tipiniz nedir?'
-                                    : 'İstediğiniz vücut tipi nedir?',
+                                    ? 'Vücut tipiniz nedir?'.tr()
+                                    : 'İstediğiniz vücut tipi nedir?'.tr(),
                                 style: AppTextStyles.questionTitle,
                               ),
                             ),
@@ -438,7 +452,7 @@ class _Onboarding1ViewState extends ConsumerState<Onboarding1View> {
                         height: 20,
                         child: Center(
                           child: Text(
-                            'Sonraki',
+                            'Sonraki'.tr(),
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                               fontFamily: AppFont.montserrat,
@@ -626,10 +640,10 @@ class _BodyTypeSlider extends StatelessWidget {
         const SizedBox(height: 12),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
+          children: [
             Text(
-              'Biçimli',
-              style: TextStyle(
+              'Biçimli'.tr(),
+              style: const TextStyle(
                 fontFamily: AppFont.montserrat,
                 fontWeight: FontWeight.w600,
                 fontSize: 12,
@@ -639,8 +653,8 @@ class _BodyTypeSlider extends StatelessWidget {
               ),
             ),
             Text(
-              'Ekstra',
-              style: TextStyle(
+              'Ekstra'.tr(),
+              style: const TextStyle(
                 fontFamily: AppFont.montserrat,
                 fontWeight: FontWeight.w600,
                 fontSize: 12,
@@ -685,6 +699,7 @@ class _GenderCard extends StatelessWidget {
   final double imageScale;
   final double? imageHeightFactor; // null => tam yükseklik
   final Color? unselectedBorderColor; // seçili değilken çerçeve rengi
+  final double borderWidth;
   final VoidCallback onTap;
 
   const _GenderCard({
@@ -696,24 +711,22 @@ class _GenderCard extends StatelessWidget {
     this.imageScale = 1.0,
     this.imageHeightFactor,
     this.unselectedBorderColor,
+    this.borderWidth = 1.0,
   });
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 190,
-      height: 240,
-      child: GestureDetector(
-        onTap: onTap,
-        behavior: HitTestBehavior.opaque,
-        child: Container(
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(6), // Radius 6px
           border: Border.all(
             color: isSelected
                 ? const Color(0xFF06C44F) // seçili: #06C44F
                 : (unselectedBorderColor ?? const Color(0x33606060)),
-            width: 1,
+            width: borderWidth,
           ),
         ),
         child: ClipRRect(
@@ -731,7 +744,6 @@ class _GenderCard extends StatelessWidget {
                 _buildFilteredImage(),
             ],
           ),
-        ),
         ),
       ),
     );

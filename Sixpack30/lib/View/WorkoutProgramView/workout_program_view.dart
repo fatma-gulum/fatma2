@@ -1,6 +1,7 @@
 import 'dart:math' show pi;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sixpack30/View/HomeView/home_view.dart';
 
@@ -233,7 +234,7 @@ class _ProgramHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '30 Günlük',
+                  '30 Günlük'.tr(),
                   style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.w700,
                     fontSize: 16,
@@ -244,7 +245,7 @@ class _ProgramHeader extends StatelessWidget {
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  'Karın Kası Programı',
+                  'Karın Kası Programı'.tr(),
                   style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.w700,
                     fontSize: 18,
@@ -1873,7 +1874,7 @@ class WorkoutDayDetailPage extends StatelessWidget {
                                   height: 20,
                                   child: Center(
                                     child: Text(
-                                      'Antrenmana Başla',
+                                      'Antrenmana Başla'.tr(),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       textAlign: TextAlign.center,
@@ -2598,7 +2599,7 @@ class _WorkoutBottomNavBar extends StatelessWidget {
                     ),
                   ),
                 ),
-                label: 'Antrenman',
+                label: 'Antrenman'.tr(),
               ),
               BottomNavigationBarItem(
                 icon: Opacity(
@@ -2627,7 +2628,7 @@ class _WorkoutBottomNavBar extends StatelessWidget {
                     ),
                   ),
                 ),
-                label: 'İlerleme',
+                label: 'İlerleme'.tr(),
               ),
               BottomNavigationBarItem(
                 icon: Opacity(
@@ -2656,7 +2657,7 @@ class _WorkoutBottomNavBar extends StatelessWidget {
                     ),
                   ),
                 ),
-                label: 'Profil',
+                label: 'Profil'.tr(),
               ),
             ],
           ),

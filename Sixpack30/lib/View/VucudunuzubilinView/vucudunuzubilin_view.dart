@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:sixpack30/Text/app_text_styles.dart';
 import 'package:sixpack30/Text/font.dart';
 import 'package:sixpack30/riverpod/providers/all_providers.dart';
@@ -48,7 +49,7 @@ class Onboarding3View extends StatelessWidget {
                       width: 266,
                       height: 98,
                       child: Text(
-                        'Vücudunuzu Bilin',
+                        'Vücudunuzu Bilin'.tr(),
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                           fontFamily: AppFont.montserrat,
@@ -114,7 +115,7 @@ class HazirmisinView extends StatelessWidget {
                   width: 303,
                   height: 68,
                   child: Text(
-                    'Kendinin En İyi\nVersiyonu Olmaya',
+                    'Kendinin En İyi\nVersiyonu Olmaya'.tr(),
                     style: const TextStyle(
                       fontFamily: AppFont.montserrat,
                       fontWeight: FontWeight.w700,
@@ -130,7 +131,7 @@ class HazirmisinView extends StatelessWidget {
                   width: 342,
                   height: 42,
                   child: Text(
-                    'Hazır Mısın?',
+                    'Hazır Mısın?'.tr(),
                     style: const TextStyle(
                       fontFamily: AppFont.montserrat,
                       fontWeight: FontWeight.w700,
@@ -171,7 +172,7 @@ class HazirmisinView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Evet Hazırım',
+                      'Evet Hazırım'.tr(),
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         fontFamily: AppFont.montserrat,
@@ -265,24 +266,24 @@ class _HedefineGoreViewState extends State<HedefineGoreView> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-            SizedBox(height: 48),
-            SizedBox(
-              width: 303,
-              height: 102,
-              child: Text(
-                'Hedefine Göre\nUyarlanmış İçerikler\nHazırlanıyor',
-                style: TextStyle(
-                  fontFamily: AppFont.montserrat,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 28,
-                  height: 34 / 28,
-                  letterSpacing: 0.0,
-                  color: Color(0xFFFFFFFF),
+            children: [
+              const SizedBox(height: 48),
+              SizedBox(
+                width: 303,
+                height: 102,
+                child: Text(
+                  'Hedefine Göre\nUyarlanmış İçerikler\nHazırlanıyor'.tr(),
+                  style: const TextStyle(
+                    fontFamily: AppFont.montserrat,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 28,
+                    height: 34 / 28,
+                    letterSpacing: 0.0,
+                    color: Color(0xFFFFFFFF),
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: 48),
+              const SizedBox(height: 48),
             ],
           ),
           ),
@@ -316,7 +317,7 @@ class _HedefineGoreViewState extends State<HedefineGoreView> {
                     // Buton metni: tüm genişlikte ortalanmış
                     Center(
                       child: Text(
-                        'Başlayın',
+                        'Başlayın'.tr(),
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                           fontFamily: AppFont.montserrat,
@@ -390,24 +391,24 @@ class Onboarding4View extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-              SizedBox(height: 48),
-              SizedBox(
-                width: 303,
-                height: 102,
-                child: Text(
-                  'Hedefine Göre\nUyarlanmış İçerikler\nHazırlanıyor',
-                  style: TextStyle(
-                    fontFamily: AppFont.montserrat,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 28,
-                    height: 34 / 28,
-                    letterSpacing: 0.0,
-                    color: Color(0xFFFFFFFF),
+              children: [
+                const SizedBox(height: 48),
+                SizedBox(
+                  width: 303,
+                  height: 102,
+                  child: Text(
+                    'Hedefine Göre\nUyarlanmış İçerikler\nHazırlanıyor'.tr(),
+                    style: const TextStyle(
+                      fontFamily: AppFont.montserrat,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 28,
+                      height: 34 / 28,
+                      letterSpacing: 0.0,
+                      color: Color(0xFFFFFFFF),
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(height: 48),
+                const SizedBox(height: 48),
               ],
             ),
           ),
@@ -418,10 +419,11 @@ class Onboarding4View extends StatelessWidget {
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: () {
-                Navigator.of(context).pushReplacement(
+                Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(
                     builder: (_) => const HomeView(),
                   ),
+                  (route) => false,
                 );
               },
               child: Container(
@@ -445,7 +447,7 @@ class Onboarding4View extends StatelessWidget {
                     // Ortada Başlayın
                     Center(
                       child: Text(
-                        'Başlayın',
+                        'Başlayın'.tr(),
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontFamily: AppFont.montserrat,
@@ -606,7 +608,7 @@ class _VucudunuzubilinQuestionViewState
                         height: 24,
                         child: Center(
                           child: Text(
-                            'Vücudunuzu Bilin',
+                            'Vücudunuzu Bilin'.tr(),
                             textAlign: TextAlign.center,
                             style: AppTextStyles.screenHeader,
                           ),
@@ -660,13 +662,13 @@ class _VucudunuzubilinQuestionViewState
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      'Hedefinize ne kadar hızlı ulaşmak istiyorsunuz?',
+                      'Hedefinize ne kadar hızlı ulaşmak istiyorsunuz?'.tr(),
                       style: AppTextStyles.questionTitle,
                     ),
                   ),
                   const SizedBox(height: 24),
                   _VucudunuzubilinOptionTile(
-                    label: 'Hemen Şimdi',
+                    label: 'Hemen Şimdi'.tr(),
                     index: 0,
                     selectedIndex: _selectedIndex,
                     onTap: () => setState(() => _selectedIndex = 0),
@@ -816,13 +818,13 @@ class _VucudunuzubilinQuestionViewState
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      'Kas yapma ile son deneyimin nasıldı?',
+                      'Kas yapma ile son deneyimin nasıldı?'.tr(),
                       style: AppTextStyles.questionTitle,
                     ),
                   ),
                   const SizedBox(height: 24),
                   _VucudunuzubilinOptionTile(
-                    label: 'Hiç denemedim',
+                    label: 'Hiç denemedim'.tr(),
                     index: 0,
                     selectedIndex: _selectedIndex,
                     onTap: () => setState(() => _selectedIndex = 0),
@@ -847,7 +849,7 @@ class _VucudunuzubilinQuestionViewState
                   ),
                   const SizedBox(height: 12),
                   _VucudunuzubilinOptionTile(
-                    label: 'Denedim ama olmadı',
+                    label: 'Denedim ama olmadı'.tr(),
                     index: 1,
                     selectedIndex: _selectedIndex,
                     onTap: () => setState(() => _selectedIndex = 1),
@@ -872,7 +874,7 @@ class _VucudunuzubilinQuestionViewState
                   ),
                   const SizedBox(height: 12),
                   _VucudunuzubilinOptionTile(
-                    label: 'Başardım ama tekrar aldım',
+                    label: 'Başardım ama tekrar aldım'.tr(),
                     index: 2,
                     selectedIndex: _selectedIndex,
                     onTap: () => setState(() => _selectedIndex = 2),
@@ -922,7 +924,7 @@ class _VucudunuzubilinQuestionViewState
                   ),
                   const SizedBox(height: 12),
                   _VucudunuzubilinOptionTile(
-                    label: 'Başardım ve daha iyisini istiyorum',
+                    label: 'Başardım ve daha iyisini istiyorum'.tr(),
                     index: 4,
                     selectedIndex: _selectedIndex,
                     onTap: () => setState(() => _selectedIndex = 4),
@@ -949,13 +951,13 @@ class _VucudunuzubilinQuestionViewState
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      'Tercih ettiğiniz antrenman tipi?',
+                      'Tercih ettiğiniz antrenman tipi?'.tr(),
                       style: AppTextStyles.questionTitle,
                     ),
                   ),
                   const SizedBox(height: 24),
                   _VucudunuzubilinOptionTile(
-                    label: 'Başlaması Kolay',
+                    label: 'Başlaması Kolay'.tr(),
                     index: 0,
                     selectedIndex: _selectedIndex,
                     onTap: () => setState(() => _selectedIndex = 0),
@@ -1035,7 +1037,7 @@ class _VucudunuzubilinQuestionViewState
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      'Aktivite düzeyiniz nedir?',
+                      'Aktivite düzeyiniz nedir?'.tr(),
                       style: AppTextStyles.questionTitle,
                     ),
                   ),
@@ -1075,7 +1077,7 @@ class _VucudunuzubilinQuestionViewState
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      'Haftanın hangi günleri antrenman yaparsınız?',
+                      'Haftanın hangi günleri antrenman yaparsınız?'.tr(),
                       style: AppTextStyles.questionTitle,
                     ),
                   ),
@@ -1181,7 +1183,7 @@ class _VucudunuzubilinQuestionViewState
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      'Antrenman süren ne kadar?',
+                      'Antrenman süren ne kadar?'.tr(),
                       style: AppTextStyles.questionTitle,
                     ),
                   ),

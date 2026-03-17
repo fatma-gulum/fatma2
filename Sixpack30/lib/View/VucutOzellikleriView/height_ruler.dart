@@ -69,10 +69,13 @@ class _HeightRulerState extends State<HeightRuler> {
     final vh = widget.scrollController.position.viewportDimension;
     final idx = cm - BodyMeasureConstants.minHeightCm;
     final tickY = idx * heightRulerTickSpacingPx;
-    final totalH = (BodyMeasureConstants.maxHeightCm - BodyMeasureConstants.minHeightCm) * heightRulerTickSpacingPx;
+    final tickAreaH =
+        (BodyMeasureConstants.maxHeightCm - BodyMeasureConstants.minHeightCm) * heightRulerTickSpacingPx;
+    final pad = vh / 2;
+    final totalH = tickAreaH + pad * 2;
     final maxOff = (totalH - vh).clamp(0.0, double.infinity);
-    // Seçili cm çizgisini viewport tam ortasına getir
-    final t = (tickY - vh / 2).clamp(0.0, maxOff);
+    // Üstte/ altta vh/2 padding var; bu sayede seçili çizgiyi ortalamak için direkt tickY yeterli.
+    final t = tickY.clamp(0.0, maxOff);
     if ((widget.scrollController.offset - t).abs() > 1) {
       widget.scrollController.jumpTo(t);
     }
@@ -80,10 +83,13 @@ class _HeightRulerState extends State<HeightRuler> {
 
   @override
   Widget build(BuildContext context) {
-    final totalHeight = (BodyMeasureConstants.maxHeightCm - BodyMeasureConstants.minHeightCm) * heightRulerTickSpacingPx;
+    final tickAreaHeight =
+        (BodyMeasureConstants.maxHeightCm - BodyMeasureConstants.minHeightCm) * heightRulerTickSpacingPx;
 
     return LayoutBuilder(
       builder: (_, constraints) {
+        final pad = constraints.maxHeight / 2;
+        final totalHeight = tickAreaHeight + pad * 2;
         return Stack(
           children: [
             Row(
@@ -96,9 +102,19 @@ class _HeightRulerState extends State<HeightRuler> {
                     child: SizedBox(
                       height: totalHeight,
                       width: double.infinity,
-                      child: CustomPaint(
-                        size: Size(constraints.maxWidth, totalHeight),
-                        painter: _HeightRulerPainter(heightUnit: widget.heightUnit),
+                      child: Column(
+                        children: [
+                          SizedBox(height: pad),
+                          SizedBox(
+                            height: tickAreaHeight,
+                            width: double.infinity,
+                            child: CustomPaint(
+                              size: Size(constraints.maxWidth, tickAreaHeight),
+                              painter: _HeightRulerPainter(heightUnit: widget.heightUnit),
+                            ),
+                          ),
+                          SizedBox(height: pad),
+                        ],
                       ),
                     ),
                   ),
