@@ -17,37 +17,47 @@ class _FaqViewState extends State<FaqView> {
     {
       'question': 'SixPack30 nedir?',
       'answer':
-          'SixPack30, karın bölgesini güçlendiren ve yağ yakımını hızlandıran, 30 günlük yapay zekâ destekli egzersiz programı sunan bir mobil fitness uygulamasıdır.',
+          'SixPack30, kullanıcıların 30 günlük karın kası egzersiz programını takip etmelerine yardımcı olan bir fitness uygulamasıdır. Günlük egzersiz planları, ilerleme takibi ve hatırlatıcılar sayesinde düzenli antrenman yapmayı kolaylaştırır.',
     },
     {
-      'question': 'Uygulama gerçekten 30 günde karın kası çıkarır mı?',
+      'question': 'SixPack30 ile nasıl çalışırım?',
       'answer':
-          'Düzenli kullanım ve sağlıklı beslenme ile 30 günlük program karın bölgesinde belirgin gelişim sağlayabilir. Sonuçlar kişiden kişiye değişiklik gösterebilir.',
+          'Uygulama, 30 gün boyunca adım adım ilerleyen bir egzersiz programı sunar. Her gün farklı karın kası egzersizleri önerilir ve kullanıcılar tamamladıkları antrenmanları işaretleyerek ilerlemelerini takip edebilir.',
     },
     {
-      'question': 'Uygulama gerçekten 30 günde karın kası çıkarır mı?',
+      'question': 'Egzersizler yeni başlayanlar için uygun mu?',
       'answer':
-          'Egzersizler yapay zekâ desteği ile yaş, vücut tipi ve hedeflerinize göre kişiselleştirilir.',
+          'Evet. SixPack30 programı farklı seviyelerdeki kullanıcılar için uygundur. Egzersizler başlangıç seviyesinden başlayarak zamanla daha yoğun hale gelecek şekilde planlanmıştır.',
     },
     {
-      'question': 'Uygulama gerçekten 30 günde karın kası çıkarır mı?',
+      'question': 'Egzersizler için spor ekipmanı gerekiyor mu?',
       'answer':
-          'Premium ile sınırsız antrenman, detaylı ilerleme analizi ve özel programlara erişim sağlanır.',
+          'Hayır. SixPack30’daki egzersizlerin büyük bölümü vücut ağırlığı ile yapılabilecek şekilde tasarlanmıştır. Bu sayede antrenmanlar evde veya spor salonunda ekipman olmadan da yapılabilir.',
     },
     {
-      'question': 'Uygulama gerçekten 30 günde karın kası çıkarır mı?',
+      'question': 'Ücretsiz kullanımda hangi özellikler sunulur?',
       'answer':
-          'Evet. Kişisel verileriniz şifreli saklanır ve üçüncü taraflarla paylaşılmaz.',
+          'Ücretsiz kullanım kapsamında belirli sayıda egzersiz planı, günlük antrenman takibi ve temel ilerleme özellikleri sunulabilir. Bazı gelişmiş özellikler sınırlı olabilir.',
     },
     {
-      'question': 'Uygulama gerçekten 30 günde karın kası çıkarır mı?',
+      'question': 'Premium paket aldığımda ne değişir?',
       'answer':
-          'Temel egzersizler çevrimdışı kullanılabilir. Tüm özellikler için internet bağlantısı önerilir.',
+          'Premium kullanıcılar aşağıdaki avantajlardan yararlanabilir:\n\n- Tüm egzersiz programlarına erişim\n- Gelişmiş antrenman planları\n- Reklamsız kullanım\n- Daha detaylı ilerleme takibi\n- Yeni eklenen fitness programlarına erken erişim',
     },
     {
-      'question': 'Uygulama gerçekten 30 günde karın kası çıkarır mı?',
+      'question': 'Egzersiz geçmişimi ve ilerlememi görebilir miyim?',
       'answer':
-          'Ayarlar > Abonelik bölümünden veya cihazınızın abonelik ayarlarından iptal işlemini yapabilirsiniz.',
+          'Evet. SixPack30, tamamladığınız antrenmanları ve ilerlemenizi takip etmenize yardımcı olur. Premium kullanıcılar geçmiş egzersiz verilerine daha detaylı şekilde erişebilir.',
+    },
+    {
+      'question': 'Egzersizleri yaparken nelere dikkat etmeliyim?',
+      'answer':
+          'Egzersizleri kendi fiziksel durumunuza uygun şekilde uygulamanız önerilir. Herhangi bir sağlık sorununuz varsa egzersiz programına başlamadan önce bir sağlık uzmanına danışmanız tavsiye edilir.',
+    },
+    {
+      'question': 'Aboneliğimi nasıl iptal edebilirim?',
+      'answer':
+          'Abonelikler App Store veya Google Play hesap ayarları üzerinden yönetilebilir ve istenildiği zaman iptal edilebilir.',
     },
   ];
 

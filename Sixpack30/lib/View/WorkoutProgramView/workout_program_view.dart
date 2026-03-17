@@ -140,6 +140,7 @@ class WorkoutProgramView extends StatelessWidget {
             separatorBuilder: (_, __) => const SizedBox(height: 16),
             itemBuilder: (context, index) {
               final day = workouts[index];
+              final dayNumber = index + 1;
               final bool isFirst = index == 0;
               final bool isLast = index == workouts.length - 1;
 
@@ -155,16 +156,16 @@ class WorkoutProgramView extends StatelessWidget {
                   Expanded(
                     child: WorkoutCard(
                       day: day,
-                      onTap: index == 0
-                          ? () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (_) =>
-                                      WorkoutDayDetailPage(day: day),
-                                ),
-                              );
-                            }
-                          : null,
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => WorkoutDayDetailPage(
+                              day: day,
+                              dayNumber: dayNumber,
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ],
@@ -504,53 +505,1162 @@ class WorkoutCard extends StatelessWidget {
 
 class WorkoutDayDetailPage extends StatelessWidget {
   final WorkoutDay day;
+  final int dayNumber;
 
-  const WorkoutDayDetailPage({super.key, required this.day});
+  const WorkoutDayDetailPage({
+    super.key,
+    required this.day,
+    required this.dayNumber,
+  });
+
+  String _thumbnailForExercise(_WorkoutExercise exercise) {
+    if (exercise.name == 'Toe Touch Crunch') {
+      return 'assets/images/resimler/1GunlukAktivasyon/Frame 6975 (1).jpg';
+    } else if (exercise.name == 'Bent Knee Leg Raise') {
+      return 'assets/images/resimler/1GunlukAktivasyon/Frame 6975 (4).jpg';
+    } else if (exercise.name == 'Lying Knee Raise') {
+      return 'assets/images/resimler/egzersizler/lyingkneeraise.jpg';
+    } else if (exercise.name == 'Heel Touch') {
+      return 'assets/images/resimler/egzersizler/heeltouch.jpg';
+    } else if (exercise.name == 'Standing Side Crunch') {
+      return 'assets/images/resimler/egzersizler/standingsidecrunch.jpg';
+    } else if (exercise.name == 'Forearm Plank') {
+      return 'assets/images/resimler/egzersizler/forearmplank.jpg';
+    } else if (exercise.name == 'Mountain Climber' ||
+        exercise.name == 'Mountain Climber (orta tempo)' ||
+        exercise.name == 'Mountain Climber (orta–hızlı tempo)') {
+      return 'assets/images/resimler/egzersizler/mountainclimber.jpg';
+    } else if (exercise.name == 'Bicycle Crunch') {
+      return 'assets/images/resimler/egzersizler/bicyclecrunch.jpg';
+    } else if (exercise.name == 'Dead Bug') {
+      return 'assets/images/resimler/egzersizler/deadbug.jpg';
+    } else if (exercise.name == 'Double Crunch') {
+      return 'assets/images/resimler/egzersizler/doublecrunch.jpg';
+    } else if (exercise.name == 'Flutter Kicks') {
+      return 'assets/images/resimler/egzersizler/flutterkicks.jpg';
+    } else if (exercise.name == 'High Knees') {
+      return 'assets/images/resimler/egzersizler/highknees.jpg';
+    } else if (exercise.name == 'High Plank Knee Drive') {
+      return 'assets/images/resimler/egzersizler/highplankkneedrive.jpg';
+    } else if (exercise.name == 'Jackknife') {
+      return 'assets/images/resimler/egzersizler/jackknife.jpg';
+    } else if (exercise.name == 'Leg Raise (düz bacak)') {
+      return 'assets/images/resimler/egzersizler/legraise.jpg';
+    } else if (exercise.name == 'Lying Leg Hold') {
+      return 'assets/images/resimler/egzersizler/lyingleghold.jpg';
+    } else if (exercise.name == 'Oblique V-Up') {
+      return 'assets/images/resimler/egzersizler/obliquevup.jpg';
+    } else if (exercise.name == 'Plank Hip Dip') {
+      return 'assets/images/resimler/egzersizler/plankhipdip.jpg';
+    } else if (exercise.name == 'Plank Shoulder Tap') {
+      return 'assets/images/resimler/egzersizler/plankshouldertap.jpg';
+    } else if (exercise.name == 'Reach Up Crunch') {
+      return 'assets/images/resimler/egzersizler/reachupcrunch.jpg';
+    } else if (exercise.name == 'Reverse Crunch') {
+      return 'assets/images/resimler/egzersizler/reversecrunch.jpg';
+    } else if (exercise.name == 'Russian Twist') {
+      return 'assets/images/resimler/egzersizler/russiantwist.jpg';
+    } else if (exercise.name == 'Scissor Kicks') {
+      return 'assets/images/resimler/egzersizler/scissorkicks.jpg';
+    } else if (exercise.name == 'Seated Twist') {
+      return 'assets/images/resimler/egzersizler/seatedtwist.jpg';
+    } else if (exercise.name == 'Side Crunch') {
+      return 'assets/images/resimler/egzersizler/sidecrunch.jpg';
+    } else if (exercise.name == 'Side Plank Reach') {
+      return 'assets/images/resimler/egzersizler/sideplankreach.jpg';
+    } else if (exercise.name == 'Sit-Up') {
+      return 'assets/images/resimler/egzersizler/sit-up.jpg';
+    } else if (exercise.name == 'Standing Oblique Crunch') {
+      return 'assets/images/resimler/egzersizler/standingobliquecrunch.jpg';
+    } else if (exercise.name == 'V-Up') {
+      return 'assets/images/resimler/egzersizler/v-up.jpg';
+    } else if (exercise.name == 'Cross Crunch') {
+      return 'assets/images/resimler/egzersizler/crosscrunch.jpg';
+    }
+    // Varsayılan görsel
+    return 'assets/images/resimler/1GunlukAktivasyon/Frame 6975.jpg';
+  }
 
   @override
   Widget build(BuildContext context) {
-    final exercises = [
-      const _WorkoutExercise(
-        name: 'Crunch',
-        repeatInfo: '3 Set x 20 Tekrar',
-        restInfo: 'Set arası: 30 sn',
-      ),
-      const _WorkoutExercise(
-        name: 'Toe Touch Crunch',
-        repeatInfo: '3 Set x 15 Tekrar',
-        restInfo: 'Set arası: 30 sn',
-      ),
-      const _WorkoutExercise(
-        name: 'Bent Knee Leg Raise',
-        repeatInfo: '3 Set x 15 Tekrar',
-        restInfo: 'Set arası: 30 sn',
-      ),
-      const _WorkoutExercise(
-        name: 'Lying Knee Raise',
-        repeatInfo: '3 Set x 15 Tekrar',
-        restInfo: 'Set arası: 30 sn',
-      ),
-      const _WorkoutExercise(
-        name: 'Heel Touch',
-        repeatInfo: '3 Set x 20 Tekrar',
-        restInfo: 'Set arası: 30 sn',
-      ),
-      const _WorkoutExercise(
-        name: 'Standing Side Crunch',
-        repeatInfo: '3 Set x 15 Tekrar',
-        restInfo: 'Set arası: 30 sn',
-      ),
-      const _WorkoutExercise(
-        name: 'Forearm Plank',
-        repeatInfo: '3 Set x 30 sn',
-        restInfo: 'Set arası: 30 sn',
-      ),
-      const _WorkoutExercise(
-        name: 'Mountain Climber',
-        repeatInfo: '3 Set x 30 sn',
-        restInfo: 'Set arası: 30 sn',
-      ),
-    ];
+    final List<_WorkoutExercise> exercises;
+
+    if (dayNumber == 2) {
+      // Gün 2 – Kontrol
+      exercises = const [
+        _WorkoutExercise(
+          name: 'Sit-Up',
+          repeatInfo: '3 set × 15 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Cross Crunch',
+          repeatInfo: '3 set × 20 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Leg Raise',
+          repeatInfo: '3 set × 12 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Reverse Crunch',
+          repeatInfo: '3 set × 15 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Bicycle Crunch',
+          repeatInfo: '3 set × 20 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Side Crunch',
+          repeatInfo: '3 set × 15 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Plank Shoulder Tap',
+          repeatInfo: '3 set × 20 tekrar (toplam)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Dead Bug',
+          repeatInfo: '3 set × 20 tekrar (toplam)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+      ];
+    } else if (dayNumber == 3) {
+      // Gün 3 – Yakıcı
+      exercises = const [
+        _WorkoutExercise(
+          name: 'V-Up',
+          repeatInfo: '3 set × 12 tekrar',
+          restInfo: 'Set arası: 40 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Double Crunch',
+          repeatInfo: '3 set × 15 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Flutter Kicks',
+          repeatInfo: '3 set × 40 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Scissor Kicks',
+          repeatInfo: '3 set × 40 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Russian Twist',
+          repeatInfo: '3 set × 20 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Oblique V-Up',
+          repeatInfo: '3 set × 12 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Side Plank',
+          repeatInfo: '3 set × 25–30 saniye (her iki taraf)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'High Knees',
+          repeatInfo: '3 set × 40 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+      ];
+    } else if (dayNumber == 4) {
+      // Gün 4 – Aktif Dinlenme
+      exercises = const [
+        _WorkoutExercise(
+          name: 'Aktif Dinlenme',
+          repeatInfo: 'Bugün karın antrenmanı yok.',
+          restInfo: 'Vücudun toparlanıyor, güçleniyor.',
+        ),
+      ];
+    } else if (dayNumber == 5) {
+      // Gün 5 – Güçlendirme
+      exercises = const [
+        _WorkoutExercise(
+          name: 'Crunch',
+          repeatInfo: '3 set × 25 tekrar',
+          restInfo: 'Set arası: 25 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Reach Up Crunch',
+          repeatInfo: '3 set × 20 tekrar',
+          restInfo: 'Set arası: 25 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Leg Raise (düz bacak)',
+          repeatInfo: '3 set × 15 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Reverse Crunch',
+          repeatInfo: '3 set × 18 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Heel Touch',
+          repeatInfo: '3 set × 24 tekrar (toplam)',
+          restInfo: 'Set arası: 25 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Standing Side Crunch',
+          repeatInfo: '3 set × 24 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 25 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Forearm Plank',
+          repeatInfo: '3 set × 40 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Mountain Climber (orta tempo)',
+          repeatInfo: '3 set × 40 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+      ];
+    } else if (dayNumber == 6) {
+      // Gün 6 – Kontrol + Oblik
+      exercises = const [
+        _WorkoutExercise(
+          name: 'Sit-Up',
+          repeatInfo: '3 set × 18 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Cross Crunch',
+          repeatInfo: '3 set × 24 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Bent Knee Leg Raise',
+          repeatInfo: '3 set × 20 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Lying Knee Raise',
+          repeatInfo: '3 set × 20 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Bicycle Crunch',
+          repeatInfo: '3 set × 24 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Side Crunch',
+          repeatInfo: '3 set × 18 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Plank Shoulder Tap',
+          repeatInfo: '3 set × 24 tekrar (toplam)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Dead Bug',
+          repeatInfo: '3 set × 24 tekrar (toplam)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+      ];
+    } else if (dayNumber == 7) {
+      // Gün 7 – Yakıcı (Hafta Finali)
+      exercises = const [
+        _WorkoutExercise(
+          name: 'V-Up',
+          repeatInfo: '3 set × 15 tekrar',
+          restInfo: 'Set arası: 40 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Double Crunch',
+          repeatInfo: '3 set × 18 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Flutter Kicks',
+          repeatInfo: '3 set × 45 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Scissor Kicks',
+          repeatInfo: '3 set × 45 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Russian Twist',
+          repeatInfo: '3 set × 30 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Oblique V-Up',
+          repeatInfo: '3 set × 15 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Side Plank',
+          repeatInfo: '3 set × 30 saniye (her iki taraf)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'High Knees',
+          repeatInfo: '3 set × 45 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+      ];
+    } else if (dayNumber == 8) {
+      // Gün 8 – Aktif Dinlenme
+      exercises = const [
+        _WorkoutExercise(
+          name: 'Aktif Dinlenme',
+          repeatInfo: 'Bugün karın antrenmanı yok.',
+          restInfo: 'Vücudun toparlanıyor, güçleniyor.',
+        ),
+      ];
+    } else if (dayNumber == 9) {
+      // Gün 9 – Core Güçlendirme
+      exercises = const [
+        _WorkoutExercise(
+          name: 'Crunch',
+          repeatInfo: '3 set × 30 tekrar',
+          restInfo: 'Set arası: 25 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Toe Touch Crunch',
+          repeatInfo: '3 set × 20 tekrar',
+          restInfo: 'Set arası: 25 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Leg Raise (düz bacak)',
+          repeatInfo: '3 set × 18 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Reverse Crunch',
+          repeatInfo: '3 set × 20 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Heel Touch',
+          repeatInfo: '3 set × 30 tekrar (toplam)',
+          restInfo: 'Set arası: 25 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Standing Side Crunch',
+          repeatInfo: '3 set × 30 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 25 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Forearm Plank',
+          repeatInfo: '3 set × 45 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Mountain Climber (orta tempo)',
+          repeatInfo: '3 set × 45 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+      ];
+    } else if (dayNumber == 10) {
+      // Gün 10 – Kontrol + Oblik Odak
+      exercises = const [
+        _WorkoutExercise(
+          name: 'Sit-Up',
+          repeatInfo: '3 set × 20 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Cross Crunch',
+          repeatInfo: '3 set × 30 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Bent Knee Leg Raise',
+          repeatInfo: '3 set × 25 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Lying Knee Raise',
+          repeatInfo: '3 set × 25 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Bicycle Crunch',
+          repeatInfo: '3 set × 30 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Side Crunch',
+          repeatInfo: '3 set × 20 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Plank Shoulder Tap',
+          repeatInfo: '3 set × 30 tekrar (toplam)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Dead Bug',
+          repeatInfo: '3 set × 30 tekrar (toplam)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+      ];
+    } else if (dayNumber == 11) {
+      // Gün 11 – Yakıcı + Dayanıklılık
+      exercises = const [
+        _WorkoutExercise(
+          name: 'V-Up',
+          repeatInfo: '3 set × 18 tekrar',
+          restInfo: 'Set arası: 40 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Double Crunch',
+          repeatInfo: '3 set × 20 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Flutter Kicks',
+          repeatInfo: '3 set × 60 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Scissor Kicks',
+          repeatInfo: '3 set × 60 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Russian Twist',
+          repeatInfo: '3 set × 40 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Oblique V-Up',
+          repeatInfo: '3 set × 18 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Side Plank',
+          repeatInfo: '3 set × 35–40 saniye (her iki taraf)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'High Knees',
+          repeatInfo: '3 set × 60 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+      ];
+    } else if (dayNumber == 12) {
+      // Gün 12 – Aktif Dinlenme
+      exercises = const [
+        _WorkoutExercise(
+          name: 'Aktif Dinlenme',
+          repeatInfo: 'Bugün karın antrenmanı yok.',
+          restInfo: 'Vücudun toparlanıyor, güçleniyor.',
+        ),
+      ];
+    } else if (dayNumber == 13) {
+      // Gün 13 – Core Güç + Kontrol
+      exercises = const [
+        _WorkoutExercise(
+          name: 'Crunch',
+          repeatInfo: '3 set × 35 tekrar',
+          restInfo: 'Set arası: 25 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Reach Up Crunch',
+          repeatInfo: '3 set × 25 tekrar',
+          restInfo: 'Set arası: 25 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Leg Raise (düz bacak)',
+          repeatInfo: '3 set × 20 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Lying Leg Hold',
+          repeatInfo: '3 set × 25 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Heel Touch',
+          repeatInfo: '3 set × 35 tekrar (toplam)',
+          restInfo: 'Set arası: 25 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Standing Oblique Crunch',
+          repeatInfo: '3 set × 30 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 25 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Plank',
+          repeatInfo: '3 set × 60 saniye',
+          restInfo: 'Set arası: 40 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Mountain Climber (orta tempo)',
+          repeatInfo: '3 set × 60 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+      ];
+    } else if (dayNumber == 14) {
+      // Gün 14 – Alt Karın + Oblik Baskı
+      exercises = const [
+        _WorkoutExercise(
+          name: 'Sit-Up',
+          repeatInfo: '3 set × 22 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Pulse Crunch',
+          repeatInfo: '3 set × 25 tekrar',
+          restInfo: 'Set arası: 25 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Reverse Crunch',
+          repeatInfo: '3 set × 22 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Scissor Kicks',
+          repeatInfo: '3 set × 60 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Russian Twist',
+          repeatInfo: '3 set × 45 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Side Crunch',
+          repeatInfo: '3 set × 25 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Plank Hip Dip',
+          repeatInfo: '3 set × 30 tekrar (toplam)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'High Plank Knee Drive',
+          repeatInfo: '3 set × 45 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+      ];
+    } else if (dayNumber == 15) {
+      // Gün 15 – Yakıcı (Hafta Finali)
+      exercises = const [
+        _WorkoutExercise(
+          name: 'V-Up',
+          repeatInfo: '3 set × 20 tekrar',
+          restInfo: 'Set arası: 40 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Double Crunch',
+          repeatInfo: '3 set × 22 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Flutter Kicks',
+          repeatInfo: '3 set × 70 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Jackknife',
+          repeatInfo: '3 set × 18 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Oblique V-Up',
+          repeatInfo: '3 set × 20 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Seated Twist',
+          repeatInfo: '3 set × 40 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Side Plank Reach',
+          repeatInfo: '3 set × 35 saniye (her iki taraf)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'High Knees',
+          repeatInfo: '3 set × 70 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+      ];
+    } else if (dayNumber == 16) {
+      // Gün 16 – Aktif Dinlenme
+      exercises = const [
+        _WorkoutExercise(
+          name: 'Aktif Dinlenme',
+          repeatInfo: 'Bugün karın antrenmanı yok.',
+          restInfo: 'Vücudun toparlanıyor, güçleniyor.',
+        ),
+      ];
+    } else if (dayNumber == 17) {
+      // Gün 17 – Core Dayanıklılık
+      exercises = const [
+        _WorkoutExercise(
+          name: 'Crunch',
+          repeatInfo: '4 set × 35 tekrar',
+          restInfo: 'Set arası: 25 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Reach Up Crunch',
+          repeatInfo: '3 set × 30 tekrar',
+          restInfo: 'Set arası: 25 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Leg Raise (düz bacak)',
+          repeatInfo: '3 set × 22 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Lying Knee Raise',
+          repeatInfo: '3 set × 30 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Heel Touch',
+          repeatInfo: '3 set × 40 tekrar (toplam)',
+          restInfo: 'Set arası: 25 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Standing Side Crunch',
+          repeatInfo: '3 set × 35 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 25 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Forearm Plank',
+          repeatInfo: '3 set × 75 saniye',
+          restInfo: 'Set arası: 40 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Mountain Climber (orta–hızlı tempo)',
+          repeatInfo: '3 set × 75 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+      ];
+    } else if (dayNumber == 18) {
+      // Gün 18 – Alt Karın + Oblik Baskı
+      exercises = const [
+        _WorkoutExercise(
+          name: 'Sit-Up',
+          repeatInfo: '4 set × 25 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Pulse Crunch',
+          repeatInfo: '3 set × 30 tekrar',
+          restInfo: 'Set arası: 25 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Reverse Crunch',
+          repeatInfo: '3 set × 25 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Scissor Kicks',
+          repeatInfo: '3 set × 75 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Russian Twist',
+          repeatInfo: '3 set × 50 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Side Crunch',
+          repeatInfo: '3 set × 30 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Plank Hip Dip',
+          repeatInfo: '3 set × 40 tekrar (toplam)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'High Plank Knee Drive',
+          repeatInfo: '3 set × 60 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+      ];
+    } else if (dayNumber == 19) {
+      // Gün 19 – Yakıcı Kontrol Günü
+      exercises = const [
+        _WorkoutExercise(
+          name: 'V-Up',
+          repeatInfo: '4 set × 22 tekrar',
+          restInfo: 'Set arası: 40 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Double Crunch',
+          repeatInfo: '3 set × 25 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Flutter Kicks',
+          repeatInfo: '3 set × 80 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Jackknife',
+          repeatInfo: '3 set × 22 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Oblique V-Up',
+          repeatInfo: '3 set × 25 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Seated Twist',
+          repeatInfo: '3 set × 50 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Side Plank Reach',
+          repeatInfo: '3 set × 45 saniye (her iki taraf)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'High Knees',
+          repeatInfo: '3 set × 80 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+      ];
+    } else if (dayNumber == 20) {
+      // Gün 20 – Aktif Dinlenme
+      exercises = const [
+        _WorkoutExercise(
+          name: 'Aktif Dinlenme',
+          repeatInfo: 'Bugün karın antrenmanı yok.',
+          restInfo: 'Vücudun toparlanıyor, güçleniyor.',
+        ),
+      ];
+    } else if (dayNumber == 21) {
+      // Gün 21 – Core Güç + Süre
+      exercises = const [
+        _WorkoutExercise(
+          name: 'Crunch',
+          repeatInfo: '4 set × 40 tekrar',
+          restInfo: 'Set arası: 20–25 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Reach Up Crunch',
+          repeatInfo: '3 set × 35 tekrar',
+          restInfo: 'Set arası: 25 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Leg Raise (düz bacak)',
+          repeatInfo: '3 set × 25 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Lying Leg Hold',
+          repeatInfo: '3 set × 35 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Heel Touch',
+          repeatInfo: '3 set × 45 tekrar (toplam)',
+          restInfo: 'Set arası: 25 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Standing Side Crunch',
+          repeatInfo: '3 set × 40 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 25 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Forearm Plank',
+          repeatInfo: '3 set × 90 saniye',
+          restInfo: 'Set arası: 40 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Mountain Climber (orta–hızlı tempo)',
+          repeatInfo: '3 set × 90 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+      ];
+    } else if (dayNumber == 22) {
+      // Gün 22 – Alt Karın & Oblik Netleştirme
+      exercises = const [
+        _WorkoutExercise(
+          name: 'Sit-Up',
+          repeatInfo: '4 set × 30 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Pulse Crunch',
+          repeatInfo: '3 set × 35 tekrar',
+          restInfo: 'Set arası: 25 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Reverse Crunch',
+          repeatInfo: '3 set × 30 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Scissor Kicks',
+          repeatInfo: '3 set × 90 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Russian Twist',
+          repeatInfo: '3 set × 60 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Side Crunch',
+          repeatInfo: '3 set × 35 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Plank Hip Dip',
+          repeatInfo: '3 set × 50 tekrar (toplam)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'High Plank Knee Drive',
+          repeatInfo: '3 set × 75 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+      ];
+    } else if (dayNumber == 23) {
+      // Gün 23 – Yakıcı Dayanıklılık (Final Öncesi)
+      exercises = const [
+        _WorkoutExercise(
+          name: 'V-Up',
+          repeatInfo: '4 set × 25 tekrar',
+          restInfo: 'Set arası: 40 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Double Crunch',
+          repeatInfo: '3 set × 30 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Flutter Kicks',
+          repeatInfo: '3 set × 90 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Jackknife',
+          repeatInfo: '3 set × 25 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Oblique V-Up',
+          repeatInfo: '3 set × 30 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Seated Twist',
+          repeatInfo: '3 set × 60 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Side Plank Reach',
+          repeatInfo: '3 set × 55 saniye (her iki taraf)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'High Knees',
+          repeatInfo: '3 set × 90 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+      ];
+    } else if (dayNumber == 24) {
+      // Gün 24 – Aktif Dinlenme
+      exercises = const [
+        _WorkoutExercise(
+          name: 'Aktif Dinlenme',
+          repeatInfo: 'Bugün karın antrenmanı yok.',
+          restInfo: 'Vücudun toparlanıyor, güçleniyor.',
+        ),
+      ];
+    } else if (dayNumber == 25) {
+      // Gün 25 – Core Dayanıklılık Zirvesi
+      exercises = const [
+        _WorkoutExercise(
+          name: 'Crunch',
+          repeatInfo: '4 set × 45 tekrar',
+          restInfo: 'Set arası: 20–25 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Reach Up Crunch',
+          repeatInfo: '3 set × 40 tekrar',
+          restInfo: 'Set arası: 25 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Leg Raise (düz bacak)',
+          repeatInfo: '3 set × 28 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Lying Leg Hold',
+          repeatInfo: '3 set × 45 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Heel Touch',
+          repeatInfo: '3 set × 50 tekrar (toplam)',
+          restInfo: 'Set arası: 25 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Standing Side Crunch',
+          repeatInfo: '3 set × 45 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 25 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Forearm Plank',
+          repeatInfo: '3 set × 100 saniye',
+          restInfo: 'Set arası: 40 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Mountain Climber (orta–hızlı tempo)',
+          repeatInfo: '3 set × 100 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+      ];
+    } else if (dayNumber == 26) {
+      // Gün 26 – Alt Karın + Oblik Maksimum Hacim
+      exercises = const [
+        _WorkoutExercise(
+          name: 'Sit-Up',
+          repeatInfo: '4 set × 35 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Pulse Crunch',
+          repeatInfo: '3 set × 40 tekrar',
+          restInfo: 'Set arası: 25 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Reverse Crunch',
+          repeatInfo: '3 set × 35 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Scissor Kicks',
+          repeatInfo: '3 set × 100 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Russian Twist',
+          repeatInfo: '3 set × 70 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Side Crunch',
+          repeatInfo: '3 set × 40 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Plank Hip Dip',
+          repeatInfo: '3 set × 60 tekrar (toplam)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'High Plank Knee Drive',
+          repeatInfo: '3 set × 90 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+      ];
+    } else if (dayNumber == 27) {
+      // Gün 27 – Final Öncesi Yakıcı Kombin
+      exercises = const [
+        _WorkoutExercise(
+          name: 'V-Up',
+          repeatInfo: '4 set × 30 tekrar',
+          restInfo: 'Set arası: 40 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Double Crunch',
+          repeatInfo: '3 set × 35 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Flutter Kicks',
+          repeatInfo: '3 set × 100 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Jackknife',
+          repeatInfo: '3 set × 30 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Oblique V-Up',
+          repeatInfo: '3 set × 35 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Seated Twist',
+          repeatInfo: '3 set × 70 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Side Plank Reach',
+          repeatInfo: '3 set × 65 saniye (her iki taraf)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'High Knees',
+          repeatInfo: '3 set × 100 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+      ];
+    } else if (dayNumber == 28) {
+      // Gün 28 – Aktif Dinlenme
+      exercises = const [
+        _WorkoutExercise(
+          name: 'Aktif Dinlenme',
+          repeatInfo: 'Bugün karın antrenmanı yok.',
+          restInfo: 'Vücudun toparlanıyor, güçleniyor.',
+        ),
+      ];
+    } else if (dayNumber == 29) {
+      // Gün 29 – Final Güç Testi
+      exercises = const [
+        _WorkoutExercise(
+          name: 'Crunch',
+          repeatInfo: '4 set × 50 tekrar',
+          restInfo: 'Set arası: 20–25 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Reach Up Crunch',
+          repeatInfo: '3 set × 45 tekrar',
+          restInfo: 'Set arası: 25 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Leg Raise (düz bacak)',
+          repeatInfo: '3 set × 30 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Lying Leg Hold',
+          repeatInfo: '3 set × 60 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Heel Touch',
+          repeatInfo: '3 set × 60 tekrar (toplam)',
+          restInfo: 'Set arası: 25 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Standing Side Crunch',
+          repeatInfo: '3 set × 50 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 25 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Forearm Plank',
+          repeatInfo: '3 set × 120 saniye',
+          restInfo: 'Set arası: 45 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Mountain Climber (orta–hızlı tempo)',
+          repeatInfo: '3 set × 120 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+      ];
+    } else if (dayNumber == 30) {
+      // Gün 30 – Final Burn & Kapanış
+      exercises = const [
+        _WorkoutExercise(
+          name: 'V-Up',
+          repeatInfo: '4 set × 35 tekrar',
+          restInfo: 'Set arası: 40 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Double Crunch',
+          repeatInfo: '3 set × 40 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Flutter Kicks',
+          repeatInfo: '3 set × 120 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Jackknife',
+          repeatInfo: '3 set × 35 tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Oblique V-Up',
+          repeatInfo: '3 set × 40 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Seated Twist',
+          repeatInfo: '3 set × 80 tekrar (sağ + sol)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Side Plank Reach',
+          repeatInfo: '3 set × 75 saniye (her iki taraf)',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'High Knees',
+          repeatInfo: '3 set × 120 saniye',
+          restInfo: 'Set arası: 30 sn',
+        ),
+      ];
+    } else {
+      // Varsayılan (Gün 1 ve diğer günler için mevcut liste)
+      exercises = const [
+        _WorkoutExercise(
+          name: 'Crunch',
+          repeatInfo: '3 Set x 20 Tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Toe Touch Crunch',
+          repeatInfo: '3 Set x 15 Tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Bent Knee Leg Raise',
+          repeatInfo: '3 Set x 15 Tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Lying Knee Raise',
+          repeatInfo: '3 Set x 15 Tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Heel Touch',
+          repeatInfo: '3 Set x 20 Tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Standing Side Crunch',
+          repeatInfo: '3 Set x 15 Tekrar',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Forearm Plank',
+          repeatInfo: '3 Set x 30 sn',
+          restInfo: 'Set arası: 30 sn',
+        ),
+        _WorkoutExercise(
+          name: 'Mountain Climber',
+          repeatInfo: '3 Set x 30 sn',
+          restInfo: 'Set arası: 30 sn',
+        ),
+      ];
+    }
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -573,7 +1683,8 @@ class WorkoutDayDetailPage extends StatelessWidget {
                     fit: StackFit.expand,
                     children: [
                       Image.asset(
-                        'assets/images/resimler/aktivasyon (2).jpg',
+                        WorkoutProgramView._programThumbnails
+                            [(dayNumber - 1).clamp(0, WorkoutProgramView._programThumbnails.length - 1)],
                         width: 390,
                         height: 280,
                         fit: BoxFit.cover,
@@ -640,7 +1751,7 @@ class WorkoutDayDetailPage extends StatelessWidget {
                         children: [
                           Expanded(
                             child: Text(
-                              '1.Gün: Aktivasyon',
+                              day.title,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.montserrat(
@@ -721,7 +1832,8 @@ class WorkoutDayDetailPage extends StatelessWidget {
                                   for (var i = 0; i < exercises.length; i++) ...[
                                     _ExerciseDetailCard(
                                       exercise: exercises[i],
-                                      thumbnailAsset: WorkoutProgramView._programThumbnails[i % 19],
+                                      thumbnailAsset:
+                                          _thumbnailForExercise(exercises[i]),
                                     ),
                                     const SizedBox(height: 8),
                                   ],
@@ -779,7 +1891,7 @@ class WorkoutDayDetailPage extends StatelessWidget {
                                 Transform.rotate(
                                   angle: -pi / 2,
                                   child: SvgPicture.asset(
-                                    'assets/images/icons/iconstack.io - (Arrow Down) (1).svg',
+                                    'assets/images/icons/iconstack.io - (Arrow Down).svg',
                                     width: 18,
                                     height: 18,
                                     fit: BoxFit.contain,
