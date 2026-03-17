@@ -23,7 +23,7 @@ class _SplashViewState extends State<SplashView> {
       Navigator.of(context).pushReplacement(
         PageRouteBuilder(
           transitionDuration: const Duration(milliseconds: 400),
-          pageBuilder: (_, animation, __) => const OnboardingView(),
+          pageBuilder: (_, animation, __) => const Splash2View(),
           transitionsBuilder: (_, animation, __, child) {
             final offsetAnimation = Tween(
               begin: const Offset(1, 0),

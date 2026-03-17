@@ -5,8 +5,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sixpack30/Text/font.dart';
 import 'package:sixpack30/View/VucutOzellikleriView/vucut_ozellikleri_view.dart';
 
-class VucutView extends StatelessWidget {
-  const VucutView({super.key});
+class Onboarding2View extends StatelessWidget {
+  const Onboarding2View({super.key});
 
   @override
   Widget build(BuildContext context) {

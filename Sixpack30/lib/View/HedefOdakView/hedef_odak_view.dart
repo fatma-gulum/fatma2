@@ -1,7 +1,9 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:sixpack30/View/VucutView/vucut_view.dart';
+import 'package:sixpack30/riverpod/providers/all_providers.dart';
+import 'package:sixpack30/View/VucutView/vucut_view.dart'; // Onboarding2View
 import 'package:sixpack30/View/VucutOzellikleriView/vucut_ozellikleri_view.dart';
 import 'package:sixpack30/Colors/app_colors.dart';
 import 'package:sixpack30/Text/app_text_styles.dart';
@@ -10,25 +12,84 @@ import 'package:sixpack30/Text/height.dart';
 import 'package:sixpack30/Text/size.dart';
 import 'package:sixpack30/Text/width.dart';
 
-class HedefOdakView extends StatefulWidget {
+class Onboarding1View extends ConsumerStatefulWidget {
   final int currentStep;
   final int totalSteps;
 
-  const HedefOdakView({
+  const Onboarding1View({
     super.key,
     this.currentStep = 1,
     this.totalSteps = 4,
   });
 
   @override
-  State<HedefOdakView> createState() => _HedefOdakViewState();
+  ConsumerState<Onboarding1View> createState() => _Onboarding1ViewState();
 }
 
-class _HedefOdakViewState extends State<HedefOdakView> {
+class _Onboarding1ViewState extends ConsumerState<Onboarding1View> {
   int _step = 1; // 1..4
   String? _selectedGender; // 'kadin' | 'erkek' | 'none' | null
   String? _selectedGoal; // 'gobek' | 'karin' | null
   int _bodyTypeIndex = 4; // 0..5, Biçimli=0, Ekstra=5, default 5th dot
+
+  /// Adım 3: Mevcut vücut tipi görseli — cinsiyete göre
+  String get _step3BodyImagePath {
+    switch (_selectedGender) {
+      case 'kadin':
+        return 'assets/images/resimler/ekstravucut_kadin.jpg';
+      case 'erkek':
+        return 'assets/images/resimler/ekstravucut_erkek.jpg';
+      default:
+        return 'assets/images/resimler/ekstravucut.jpg';
+    }
+  }
+
+  /// Adım 4: İstenen vücut tipi görseli — cinsiyete göre
+  String get _step4BodyImagePath {
+    switch (_selectedGender) {
+      case 'kadin':
+        return 'assets/images/resimler/bicimlivucut_kadin.jpg';
+      case 'erkek':
+        return 'assets/images/resimler/bicimlivucut_erkek.jpg';
+      default:
+        return 'assets/images/resimler/bicimlivucut.jpg';
+    }
+  }
+
+  /// Kadın vücudu: Biçimli (0) → Ekstra (5). Step 4'te 7 nokta için son görsel tekrarlanır.
+  static const List<String> _kadinVucutPaths = [
+    'assets/images/resimler/kadın vücudu/Rectangle.jpg',
+    'assets/images/resimler/kadın vücudu/Rectangle (1).jpg',
+    'assets/images/resimler/kadın vücudu/Rectangle (2).jpg',
+    'assets/images/resimler/kadın vücudu/Rectangle (3).jpg',
+    'assets/images/resimler/kadın vücudu/Rectangle (4).jpg',
+    'assets/images/resimler/kadın vücudu/Rectangle (5).jpg',
+  ];
+
+  /// Erkek vücudu: Biçimli (0) → Ekstra (5). Step 4'te 7 nokta için son görsel tekrarlanır.
+  static const List<String> _erkekVucutPaths = [
+    'assets/images/resimler/erkek vücudu/4 81.jpg',
+    'assets/images/resimler/erkek vücudu/5 4.jpg',
+    'assets/images/resimler/erkek vücudu/6 4.jpg',
+    'assets/images/resimler/erkek vücudu/7 1.jpg',
+    'assets/images/resimler/erkek vücudu/8 3.jpg',
+    'assets/images/resimler/erkek vücudu/9 1.jpg',
+  ];
+
+  /// Slider indeksine göre vücut görseli (kadın/erkek seçiliyse klasördeki fotoğraflar).
+  String _bodyImagePathForSlider(bool isStep3) {
+    final dotCount = isStep3 ? 6 : 7;
+    final index = _bodyTypeIndex.clamp(0, dotCount - 1);
+    if (_selectedGender == 'kadin') {
+      final list = _kadinVucutPaths;
+      return list[index.clamp(0, list.length - 1)];
+    }
+    if (_selectedGender == 'erkek') {
+      final list = _erkekVucutPaths;
+      return list[index.clamp(0, list.length - 1)];
+    }
+    return isStep3 ? _step3BodyImagePath : _step4BodyImagePath;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -141,32 +202,45 @@ class _HedefOdakViewState extends State<HedefOdakView> {
                       ),
                     ),
                     const SizedBox(height: 24),
-                    Row(
-                      children: [
-                        _GenderCard(
+                    Center(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          _GenderCard(
                           label: 'Kadın',
                           isSelected: _selectedGender == 'kadin',
-                          imagePath: 'assets/images/resimler/loginkadin.png',
+                          imagePath: 'assets/images/resimler/kadın.jpeg',
                           imageAlignment: Alignment(0, -0.1),
                           imageScale: 1.0,
                           imageHeightFactor: null,
-                          onTap: () => setState(() => _selectedGender = 'kadin'),
-                        ),
-                        const SizedBox(width: 12),
-                        _GenderCard(
-                          label: 'Erkek',
-                          isSelected: _selectedGender == 'erkek',
-                          imagePath: 'assets/images/resimler/loginerkek.png',
-                          imageAlignment: Alignment.center,
-                          imageScale: 1.0,
-                          imageHeightFactor: null,
-                          onTap: () => setState(() => _selectedGender = 'erkek'),
-                        ),
-                      ],
+                          unselectedBorderColor: const Color(0xFF969A9D),
+                          onTap: () {
+                            ref.read(selectedGenderProvider.notifier).state = 'kadin';
+                            setState(() => _selectedGender = 'kadin');
+                          },
+                          ),
+                          const SizedBox(width: 12),
+                          _GenderCard(
+                            label: 'Erkek',
+                            isSelected: _selectedGender == 'erkek',
+                            imagePath: 'assets/images/resimler/erkek.jpeg',
+                            imageAlignment: Alignment.center,
+                            imageScale: 1.0,
+                            imageHeightFactor: null,
+                            onTap: () {
+                            ref.read(selectedGenderProvider.notifier).state = 'erkek';
+                            setState(() => _selectedGender = 'erkek');
+                          },
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 16),
                     GestureDetector(
-                      onTap: () => setState(() => _selectedGender = 'none'),
+                      onTap: () {
+                            ref.read(selectedGenderProvider.notifier).state = 'none';
+                            setState(() => _selectedGender = 'none');
+                          },
                       behavior: HitTestBehavior.opaque,
                       child: Container(
                         height: 48,
@@ -259,7 +333,7 @@ class _HedefOdakViewState extends State<HedefOdakView> {
                           ? () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (_) => const VucutView(),
+                                  builder: (_) => const Onboarding2View(),
                                 ),
                               );
                             }
@@ -282,31 +356,37 @@ class _HedefOdakViewState extends State<HedefOdakView> {
                           ),
                           const SizedBox(height: 24),
                           SizedBox(
-                            height: 250,
+                            height: 340,
                             width: double.infinity,
-                            child: Center(
-                              child: _step == 3
-                                  ? Image.asset(
+                            child: _step == 3
+                                ? Image.asset(
+                                    _bodyImagePathForSlider(true),
+                                    fit: BoxFit.contain,
+                                    alignment: Alignment.center,
+                                    width: double.infinity,
+                                    height: 340,
+                                    errorBuilder: (_, __, ___) => Image.asset(
                                       'assets/images/resimler/ekstravucut.jpg',
                                       fit: BoxFit.contain,
-                                      height: 250,
-                                      errorBuilder: (_, __, ___) => const Icon(
-                                        Icons.image_not_supported,
-                                        size: 80,
-                                        color: Color(0xFFBDBDBD),
-                                      ),
-                                    )
-                                  : Image.asset(
+                                      alignment: Alignment.center,
+                                      width: double.infinity,
+                                      height: 340,
+                                    ),
+                                  )
+                                : Image.asset(
+                                    _bodyImagePathForSlider(false),
+                                    fit: BoxFit.contain,
+                                    alignment: Alignment.center,
+                                    width: double.infinity,
+                                    height: 340,
+                                    errorBuilder: (_, __, ___) => Image.asset(
                                       'assets/images/resimler/bicimlivucut.jpg',
                                       fit: BoxFit.contain,
-                                      height: 250,
-                                      errorBuilder: (_, __, ___) => const Icon(
-                                        Icons.image_not_supported,
-                                        size: 80,
-                                        color: Color(0xFFBDBDBD),
-                                      ),
+                                      alignment: Alignment.center,
+                                      width: double.infinity,
+                                      height: 340,
                                     ),
-                            ),
+                                  ),
                           ),
                           const SizedBox(height: 32),
                           _BodyTypeSlider(
@@ -340,7 +420,7 @@ class _HedefOdakViewState extends State<HedefOdakView> {
                     if (_step == 4) {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (_) => const VucutView(),
+                          builder: (_) => const Onboarding2View(),
                         ),
                       );
                     } else if (_step < widget.totalSteps) {
@@ -604,6 +684,7 @@ class _GenderCard extends StatelessWidget {
   final Alignment imageAlignment;
   final double imageScale;
   final double? imageHeightFactor; // null => tam yükseklik
+  final Color? unselectedBorderColor; // seçili değilken çerçeve rengi
   final VoidCallback onTap;
 
   const _GenderCard({
@@ -614,13 +695,14 @@ class _GenderCard extends StatelessWidget {
     this.imageAlignment = Alignment.center,
     this.imageScale = 1.0,
     this.imageHeightFactor,
+    this.unselectedBorderColor,
   });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 165,
-      height: 195,
+      width: 190,
+      height: 240,
       child: GestureDetector(
         onTap: onTap,
         behavior: HitTestBehavior.opaque,
@@ -630,7 +712,7 @@ class _GenderCard extends StatelessWidget {
           border: Border.all(
             color: isSelected
                 ? const Color(0xFF06C44F) // seçili: #06C44F
-                : const Color(0x33606060), // seçili değil: #60606033
+                : (unselectedBorderColor ?? const Color(0x33606060)),
             width: 1,
           ),
         ),
@@ -647,24 +729,6 @@ class _GenderCard extends StatelessWidget {
                 )
               else
                 _buildFilteredImage(),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: Text(
-                    label,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontFamily: AppFont.montserrat,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14,
-                      height: AppTextHeight.full,
-                      letterSpacing: AppTextWidth.normal,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
             ],
           ),
         ),

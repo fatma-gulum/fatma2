@@ -445,41 +445,44 @@ class _VucutOzellikleriViewState extends State<VucutOzellikleriView> {
                       ),
                     ),
                     const SizedBox(height: 24),
-                    Center(
-                      child: GestureDetector(
-                        onTap: () => _showWeightUnitPicker(context),
-                        child: Container(
-                          width: 90,
-                          height: 24,
-                          padding: const EdgeInsets.symmetric(horizontal: 12),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFF00EF5B),
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(
-                              width: 1,
+                    Padding(
+                      padding: const EdgeInsets.only(top: 16),
+                      child: Center(
+                        child: GestureDetector(
+                          onTap: () => _showWeightUnitPicker(context),
+                          child: Container(
+                            width: 90,
+                            height: 24,
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            decoration: BoxDecoration(
                               color: const Color(0xFF00EF5B),
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(
+                                width: 1,
+                                color: const Color(0xFF00EF5B),
+                              ),
                             ),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                _weightUnit == WeightUnit.kg ? 'kg' : 'lb',
-                                style: const TextStyle(
-                                  fontFamily: AppFont.montserrat,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 14,
-                                  color: Color(0xFFFFFFFF),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  _weightUnit == WeightUnit.kg ? 'kg' : 'lb',
+                                  style: const TextStyle(
+                                    fontFamily: AppFont.montserrat,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14,
+                                    color: Color(0xFFFFFFFF),
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(width: 6),
-                              const Icon(
-                                Icons.keyboard_arrow_down,
-                                color: Color(0xFFFFFFFF),
-                                size: 18,
-                              ),
-                            ],
+                                const SizedBox(width: 6),
+                                const Icon(
+                                  Icons.keyboard_arrow_down,
+                                  color: Color(0xFFFFFFFF),
+                                  size: 18,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -508,41 +511,44 @@ class _VucutOzellikleriViewState extends State<VucutOzellikleriView> {
                       ),
                     ),
                     const SizedBox(height: 24),
-                    Center(
-                      child: GestureDetector(
-                        onTap: () => _showWeightUnitPicker(context),
-                        child: Container(
-                          width: 90,
-                          height: 24,
-                          padding: const EdgeInsets.symmetric(horizontal: 12),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFF00EF5B),
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(
-                              width: 1,
+                    Padding(
+                      padding: const EdgeInsets.only(top: 16),
+                      child: Center(
+                        child: GestureDetector(
+                          onTap: () => _showWeightUnitPicker(context),
+                          child: Container(
+                            width: 90,
+                            height: 24,
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            decoration: BoxDecoration(
                               color: const Color(0xFF00EF5B),
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(
+                                width: 1,
+                                color: const Color(0xFF00EF5B),
+                              ),
                             ),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                _weightUnit == WeightUnit.kg ? 'kg' : 'lb',
-                                style: const TextStyle(
-                                  fontFamily: AppFont.montserrat,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 14,
-                                  color: Color(0xFFFFFFFF),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  _weightUnit == WeightUnit.kg ? 'kg' : 'lb',
+                                  style: const TextStyle(
+                                    fontFamily: AppFont.montserrat,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14,
+                                    color: Color(0xFFFFFFFF),
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(width: 6),
-                              const Icon(
-                                Icons.keyboard_arrow_down,
-                                color: Color(0xFFFFFFFF),
-                                size: 18,
-                              ),
-                            ],
+                                const SizedBox(width: 6),
+                                const Icon(
+                                  Icons.keyboard_arrow_down,
+                                  color: Color(0xFFFFFFFF),
+                                  size: 18,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -633,7 +639,7 @@ class _VucutOzellikleriViewState extends State<VucutOzellikleriView> {
                     } else {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (_) => const VucudunuzubilinView(),
+                          builder: (_) => const Onboarding3View(),
                         ),
                       );
                     }

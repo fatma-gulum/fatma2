@@ -12,8 +12,8 @@ import 'package:sixpack30/Text/height.dart';
 import 'package:sixpack30/Text/size.dart';
 import 'package:sixpack30/Text/width.dart';
 
-class Onboarding3View extends StatelessWidget {
-  const Onboarding3View({super.key});
+class Splash4View extends StatelessWidget {
+  const Splash4View({super.key});
 
   @override
   Widget build(BuildContext context) {

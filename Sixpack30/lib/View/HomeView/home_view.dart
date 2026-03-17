@@ -97,7 +97,11 @@ class _HomeViewState extends State<HomeView> {
       backgroundColor: _selectedTabIndex == 3
           ? const Color(0xFFFEFEFE)
           : const Color(0xFFFFFFFF),
-      body: Center(
+      body: _selectedTabIndex == 1
+          ? WorkoutProgramView(
+              onBack: () => setState(() => _selectedTabIndex = 0),
+            )
+          : Center(
         child: Container(
           width: _selectedTabIndex == 3 ? 390 : null,
           constraints: BoxConstraints(
@@ -112,25 +116,20 @@ class _HomeViewState extends State<HomeView> {
           child: SafeArea(
             child: _selectedTabIndex == 3
                 ? SizedBox(
-                    width: 390,
-                    child: _isEditingProfile
-                        ? _buildEditProfileView()
-                        : _isNotificationsView
-                            ? _buildNotificationsView()
-                            : _isLanguagePreferencesView
-                                ? _buildLanguagePreferencesView()
-                                : _isRateUsView
-                                    ? _buildRateUsView()
-                                    : _buildProfileView(),
-                  )
-                : _selectedTabIndex == 2
-                    ? _buildProgressView()
-                    : _selectedTabIndex == 1
-                        ? WorkoutProgramView(
-                            onBack: () =>
-                                setState(() => _selectedTabIndex = 0),
-                          )
-                        : Column(
+                          width: 390,
+                          child: _isEditingProfile
+                              ? _buildEditProfileView()
+                              : _isNotificationsView
+                                  ? _buildNotificationsView()
+                                  : _isLanguagePreferencesView
+                                      ? _buildLanguagePreferencesView()
+                                      : _isRateUsView
+                                          ? _buildRateUsView()
+                                          : _buildProfileView(),
+                        )
+                      : _selectedTabIndex == 2
+                          ? _buildProgressView()
+                          : Column(
                             children: [
                               _buildHeader(),
                               const SizedBox(height: 8),

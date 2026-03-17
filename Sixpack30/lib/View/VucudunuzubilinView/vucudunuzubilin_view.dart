@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sixpack30/Text/app_text_styles.dart';
 import 'package:sixpack30/Text/font.dart';
+import 'package:sixpack30/riverpod/providers/all_providers.dart';
 import 'package:sixpack30/View/HomeView/home_view.dart';
 
-class VucudunuzubilinView extends StatelessWidget {
-  const VucudunuzubilinView({super.key});
+class Onboarding3View extends StatelessWidget {
+  const Onboarding3View({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -230,7 +232,7 @@ class _HedefineGoreViewState extends State<HedefineGoreView> {
         // 100% olduğunda final ekrana geç
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (_) => const BaslayinFinalView(),
+            builder: (_) => const Onboarding4View(),
           ),
         );
       }
@@ -313,22 +315,16 @@ class _HedefineGoreViewState extends State<HedefineGoreView> {
                     ),
                     // Buton metni: tüm genişlikte ortalanmış
                     Center(
-                      child: SizedBox(
-                        width: 61,
-                        height: 20,
-                        child: Center(
-                          child: Text(
-                            'Başlayın',
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontFamily: AppFont.montserrat,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16,
-                              height: 1.0,
-                              letterSpacing: -0.18,
-                              color: Color(0xFF0A0A0A),
-                            ),
-                          ),
+                      child: Text(
+                        'Başlayın',
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontFamily: AppFont.montserrat,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                          height: 1.0,
+                          letterSpacing: -0.18,
+                          color: Color(0xFF0A0A0A),
                         ),
                       ),
                     ),
@@ -366,8 +362,8 @@ class _HedefineGoreViewState extends State<HedefineGoreView> {
   }
 }
 
-class BaslayinFinalView extends StatelessWidget {
-  const BaslayinFinalView({super.key});
+class Onboarding4View extends StatelessWidget {
+  const Onboarding4View({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -448,22 +444,16 @@ class BaslayinFinalView extends StatelessWidget {
                     ),
                     // Ortada Başlayın
                     Center(
-                      child: SizedBox(
-                        width: 61,
-                        height: 20,
-                        child: Center(
-                          child: Text(
-                            'Başlayın',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontFamily: AppFont.montserrat,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16,
-                              height: 1.0,
-                              letterSpacing: -0.18,
-                              color: Color(0xFF0A0A0A),
-                            ),
-                          ),
+                      child: Text(
+                        'Başlayın',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: AppFont.montserrat,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                          height: 1.0,
+                          letterSpacing: -0.18,
+                          color: Color(0xFF0A0A0A),
                         ),
                       ),
                     ),
@@ -471,22 +461,16 @@ class BaslayinFinalView extends StatelessWidget {
                     Positioned(
                       right: 16,
                       top: (44 - 17) / 2,
-                      child: SizedBox(
-                        width: 35,
-                        height: 17,
-                        child: Center(
-                          child: Text(
-                            '%100',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontFamily: AppFont.montserrat,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 14,
-                              height: 1.0,
-                              letterSpacing: -0.154,
-                              color: Color(0xFF1B1B1B),
-                            ),
-                          ),
+                      child: Text(
+                        '%100',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: AppFont.montserrat,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14,
+                          height: 1.0,
+                          letterSpacing: -0.154,
+                          color: Color(0xFF1B1B1B),
                         ),
                       ),
                     ),
@@ -501,18 +485,34 @@ class BaslayinFinalView extends StatelessWidget {
   }
 }
 
-class VucudunuzubilinQuestionView extends StatefulWidget {
+class VucudunuzubilinQuestionView extends ConsumerStatefulWidget {
   final int step;
+  /// Adım 4 (Aktivite düzeyi) için cinsiyet; geçilmezse provider'dan okunur.
+  final String? gender;
 
-  const VucudunuzubilinQuestionView({super.key, this.step = 1});
+  const VucudunuzubilinQuestionView({super.key, this.step = 1, this.gender});
 
   @override
-  State<VucudunuzubilinQuestionView> createState() =>
+  ConsumerState<VucudunuzubilinQuestionView> createState() =>
       _VucudunuzubilinQuestionViewState();
 }
 
+/// Aktivite düzeyi görselleri: kadın (4), erkek (4). Slider 0=Hareketsiz .. 3=Hareketli.
+const List<String> _kadinAktivitePaths = [
+  'assets/images/resimler/kadin_aktivite_duzeyi/14 2.jpg',
+  'assets/images/resimler/kadin_aktivite_duzeyi/15 4.jpg',
+  'assets/images/resimler/kadin_aktivite_duzeyi/17 900 (1).jpg',
+  'assets/images/resimler/kadin_aktivite_duzeyi/18 17267576.jpg',
+];
+const List<String> _erkekAktivitePaths = [
+  'assets/images/resimler/erkek_aktivite_duzeyi/19 7.jpg',
+  'assets/images/resimler/erkek_aktivite_duzeyi/20 28.jpg',
+  'assets/images/resimler/erkek_aktivite_duzeyi/22 1.jpg',
+  'assets/images/resimler/erkek_aktivite_duzeyi/23 1.jpg',
+];
+
 class _VucudunuzubilinQuestionViewState
-    extends State<VucudunuzubilinQuestionView> {
+    extends ConsumerState<VucudunuzubilinQuestionView> {
   late int _selectedIndex;
   int _activityLevelIndex = 2;
   final Set<int> _selectedDays = {5};
@@ -533,12 +533,45 @@ class _VucudunuzubilinQuestionViewState
   static const double _designWidth = 390.0;
   static const double _designHeight = 844.0;
 
+  /// Cinsiyete ve slider indeksine göre aktivite düzeyi görseli (0=Hareketsiz .. 3=Hareketli)
+  String _activityLevelImagePath(String? gender) {
+    final idx = _activityLevelIndex.clamp(0, 3);
+    if (gender == 'erkek') return _erkekAktivitePaths[idx];
+    // kadin veya null/none: kadın aktivite görselleri (slider hep 4 fotoğraf değiştirir)
+    return _kadinAktivitePaths[idx];
+  }
+
+  Widget _buildActivityLevelImage(double scaleW, double scaleH, String? gender) {
+    final path = _activityLevelImagePath(gender);
+    final w = 242.18860239322538 * scaleW;
+    final h = 242.18860239322538 * scaleH;
+    // key: path değişince (slider hareketsiz→hareketli) görsel kesin güncellenir
+    return Image.asset(
+      path,
+      key: ValueKey(path),
+      width: w,
+      height: h,
+      fit: BoxFit.cover,
+      filterQuality: FilterQuality.high,
+      cacheWidth: (w * MediaQuery.of(context).devicePixelRatio).round(),
+      cacheHeight: (h * MediaQuery.of(context).devicePixelRatio).round(),
+      errorBuilder: (_, __, ___) => Image.asset(
+        'assets/images/resimler/Frame 6959 (3).jpg',
+        width: w,
+        height: h,
+        fit: BoxFit.cover,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final step = widget.step;
     final size = MediaQuery.of(context).size;
     final scaleW = size.width / _designWidth;
     final scaleH = size.height / _designHeight;
+    // Cinsiyet: sayfaya parametreyle geçildiyse onu kullan, yoksa provider'dan oku
+    final selectedGender = widget.gender ?? ref.watch(selectedGenderProvider);
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
       body: SafeArea(
@@ -996,6 +1029,9 @@ class _VucudunuzubilinQuestionViewState
                     ),
                   ),
                   ] else if (step == 4) ...[
+                  // --- Aktivite düzeyiniz nedir? (Vücudunuzu Bilin, adım 4) ---
+                  // Görsel: Hedef & Odak'ta seçilen cinsiyete göre (kadın/erkek aktivite klasörü)
+                  // Slider Hareketsiz→Hareketli: 4 fotoğraf sırayla değişir
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -1006,27 +1042,28 @@ class _VucudunuzubilinQuestionViewState
                   SizedBox(height: 54 * scaleH),
                   Align(
                     alignment: Alignment.center,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(24.22 * scaleW),
-                      child: Image.asset(
-                        'assets/images/resimler/Frame 6959 (3).jpg',
-                        width: 242.18860239322538 * scaleW,
-                        height: 242.18860239322538 * scaleH,
-                        fit: BoxFit.cover,
-                        filterQuality: FilterQuality.high,
-                        cacheWidth: (242.18860239322538 *
-                                scaleW *
-                                MediaQuery.of(context).devicePixelRatio)
-                            .round(),
-                        cacheHeight: (242.18860239322538 *
-                                scaleH *
-                                MediaQuery.of(context).devicePixelRatio)
-                            .round(),
-                        errorBuilder: (_, __, ___) => const ColoredBox(
-                          color: Color(0xFFE0E0E0),
-                          child: Center(child: Icon(Icons.image_not_supported)),
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(24.22 * scaleW),
+                          child: _buildActivityLevelImage(scaleW, scaleH, selectedGender),
                         ),
-                      ),
+                        Transform.rotate(
+                          angle: 48 * 3.14159265359 / 180,
+                          child: Container(
+                            width: 230.18860239322538 * scaleW,
+                            height: 230.18860239322538 * scaleH,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(24.22 * scaleW),
+                              border: Border.all(
+                                color: const Color(0xFF8C8C8C),
+                                width: 1,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   SizedBox(height: 32 * scaleH),
@@ -1214,9 +1251,10 @@ class _VucudunuzubilinQuestionViewState
                         ),
                       );
                     } else if (step == 3) {
+                      final gender = ref.read(selectedGenderProvider);
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (_) => const VucudunuzubilinQuestionView(step: 4),
+                          builder: (_) => VucudunuzubilinQuestionView(step: 4, gender: gender),
                         ),
                       );
                     } else if (step == 4) {

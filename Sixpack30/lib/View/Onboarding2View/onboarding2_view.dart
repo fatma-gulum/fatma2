@@ -13,8 +13,8 @@ import 'package:sixpack30/Text/height.dart';
 import 'package:sixpack30/Text/size.dart';
 import 'package:sixpack30/Text/width.dart';
 
-class Onboarding2View extends StatelessWidget {
-  const Onboarding2View({super.key});
+class Splash3View extends StatelessWidget {
+  const Splash3View({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -178,7 +178,7 @@ class Onboarding2View extends StatelessWidget {
                               transitionDuration:
                                   const Duration(milliseconds: 400),
                               pageBuilder: (_, animation, __) =>
-                                  const Onboarding3View(),
+                                  Splash4View(),
                               transitionsBuilder: (_, animation, __, child) {
                                 final offsetAnimation = Tween(
                                   begin: const Offset(1, 0),

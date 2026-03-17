@@ -25,6 +25,41 @@ class WorkoutProgramView extends StatelessWidget {
 
   const WorkoutProgramView({super.key, this.onBack});
 
+  /// 30 günlük program görselleri: 1. gün = Frame 6975.jpg, 2. gün = Frame 6975 (1).jpg, ...
+  static const List<String> _programThumbnails = [
+    'assets/images/resimler/30GunlukProgram/Frame 6975.jpg',       // 1
+    'assets/images/resimler/30GunlukProgram/Frame 6975 (1).jpg',  // 2
+    'assets/images/resimler/30GunlukProgram/Frame 6975 (2).jpg',  // 3
+    'assets/images/resimler/30GunlukProgram/Frame 6975 (3).jpg',  // 4
+    'assets/images/resimler/30GunlukProgram/Frame 6975 (4).jpg',  // 5
+    'assets/images/resimler/30GunlukProgram/Frame 6975 (5).jpg',  // 6
+    'assets/images/resimler/30GunlukProgram/Frame 6975 (6).jpg',  // 7
+    'assets/images/resimler/30GunlukProgram/Frame 6975 (7).jpg',  // 8
+    'assets/images/resimler/30GunlukProgram/Frame 6975 (8).jpg',  // 9
+    'assets/images/resimler/30GunlukProgram/Frame 6975 (9).jpg',  // 10
+    'assets/images/resimler/30GunlukProgram/Frame 6975 (10).jpg', // 11
+    'assets/images/resimler/30GunlukProgram/Frame 6975 (11).jpg', // 12
+    'assets/images/resimler/30GunlukProgram/Frame 6975 (12).jpg', // 13
+    'assets/images/resimler/30GunlukProgram/Frame 6975 (13).jpg', // 14
+    'assets/images/resimler/30GunlukProgram/Frame 6975 (14).jpg', // 15
+    'assets/images/resimler/30GunlukProgram/Frame 6975 (15).jpg', // 16
+    'assets/images/resimler/30GunlukProgram/Frame 6975 (16).jpg', // 17
+    'assets/images/resimler/30GunlukProgram/Frame 6975 (17).jpg', // 18
+    'assets/images/resimler/30GunlukProgram/Frame 6975 (18).jpg', // 19
+    // 20–30: ilk 10 görsel döngüyle (1–10)
+    'assets/images/resimler/30GunlukProgram/Frame 6975.jpg',       // 20
+    'assets/images/resimler/30GunlukProgram/Frame 6975 (1).jpg',  // 21
+    'assets/images/resimler/30GunlukProgram/Frame 6975 (2).jpg',  // 22
+    'assets/images/resimler/30GunlukProgram/Frame 6975 (3).jpg',  // 23
+    'assets/images/resimler/30GunlukProgram/Frame 6975 (4).jpg',  // 24
+    'assets/images/resimler/30GunlukProgram/Frame 6975 (5).jpg',  // 25
+    'assets/images/resimler/30GunlukProgram/Frame 6975 (6).jpg',  // 26
+    'assets/images/resimler/30GunlukProgram/Frame 6975 (7).jpg',  // 27
+    'assets/images/resimler/30GunlukProgram/Frame 6975 (8).jpg',  // 28
+    'assets/images/resimler/30GunlukProgram/Frame 6975 (9).jpg',  // 29
+    'assets/images/resimler/30GunlukProgram/Frame 6975.jpg',       // 30 (ilk görsel)
+  ];
+
   List<WorkoutDay> get _workouts => List.generate(30, (index) {
         final dayNumber = index + 1;
         final status = dayNumber <= 2
@@ -76,30 +111,8 @@ class WorkoutProgramView extends StatelessWidget {
           title = '$dayNumber. Gün Antrenman';
         }
 
-        String thumbnail;
-        if (dayNumber == 1) {
-          thumbnail = 'assets/images/resimler/1.gun.jpg';
-        } else if (dayNumber == 2) {
-          thumbnail = 'assets/images/resimler/2.gun.jpg';
-        } else if (dayNumber == 3) {
-          thumbnail = 'assets/images/resimler/3.gun.jpg';
-        } else if (dayNumber == 4) {
-          thumbnail = 'assets/images/resimler/4.gun.jpg';
-        } else if (dayNumber == 5) {
-          thumbnail = 'assets/images/resimler/5.gun.jpg';
-        } else if (dayNumber == 6) {
-          thumbnail = 'assets/images/resimler/6.gun.jpg';
-        } else if (dayNumber == 7) {
-          thumbnail = 'assets/images/resimler/7.gun.jpg';
-        } else if (dayNumber == 8) {
-          thumbnail = 'assets/images/resimler/8.gun.jpg';
-        } else if (dayNumber == 9) {
-          thumbnail = 'assets/images/resimler/9.gun.jpg';
-        } else if (dayNumber == 10) {
-          thumbnail = 'assets/images/resimler/10.gun.jpg';
-        } else {
-          thumbnail = 'assets/images/resimler/antrenman1.jpg';
-        }
+        // 30GunlukProgram: Frame 6975.jpg = 1. gün, Frame 6975 (1).jpg = 2. gün, ... (19 görsel; 20–30 son görsel tekrarlanır)
+        final thumbnail = _programThumbnails[dayNumber - 1];
 
         return WorkoutDay(
           title: title,
@@ -175,37 +188,27 @@ class _ProgramHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final w = size.width;
     return SizedBox(
       height: 338,
-      width: 392,
+      width: w,
       child: Stack(
         clipBehavior: Clip.none,
         children: [
           Positioned(
-            left: -1,
-            width: 392,
+            left: 0,
+            right: 0,
             height: 338,
-            child: Opacity(
-              opacity: 1,
-              child: ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(15),
-                  bottomRight: Radius.circular(15),
-                ),
-                child: Transform.translate(
-                  offset: const Offset(0, 8),
-                  child: Transform.scale(
-                    scale: 1.0,
-                    alignment: Alignment.center,
-                    child: Image.asset(
-                      'assets/images/resimler/antrenman1.jpg',
-                      width: 352,
-                      height: 330,
-                      fit: BoxFit.cover,
-                      alignment: Alignment.center,
-                    ),
-                  ),
-                ),
+            child: ClipRRect(
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(15),
+                bottomRight: Radius.circular(15),
+              ),
+              child: Image.asset(
+                'assets/images/resimler/antrenman1.jpg',
+                width: w,
+                height: 338,
+                fit: BoxFit.cover,
               ),
             ),
           ),
@@ -552,6 +555,7 @@ class WorkoutDayDetailPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
+        top: false,
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -578,7 +582,7 @@ class WorkoutDayDetailPage extends StatelessWidget {
                         color: const Color(0x61000000),
                       ),
                       Positioned(
-                        top: 18,
+                        top: MediaQuery.of(context).padding.top + 12,
                         left: 16,
                         child: IconButton(
                           icon: SizedBox(
@@ -607,46 +611,84 @@ class WorkoutDayDetailPage extends StatelessWidget {
                   ),
                 ),
               ),
-              // İçerik alanı
-              Container(
-                width: 390,
-                height: 900,
-                decoration: const BoxDecoration(
-                  color: Color(0xFFFFFFFF),
-                  borderRadius: BorderRadius.vertical(
+              // İçerik alanı — kart fotoğrafın üzerine taşar (negatif margin yerine translate)
+              Transform.translate(
+                offset: const Offset(0, -24),
+                child: Container(
+                  width: double.infinity,
+                  height: 900,
+                  decoration: BoxDecoration(
+                  color: const Color(0xFFFFFFFF),
+                  borderRadius: const BorderRadius.vertical(
                     top: Radius.circular(15),
                   ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color(0x1A000000),
+                      offset: const Offset(0, -2),
+                      blurRadius: 8,
+                      spreadRadius: 0,
+                    ),
+                  ],
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 20, 20, 24),
+                  padding: const EdgeInsets.fromLTRB(12, 20, 12, 24),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
-                        width: 342,
-                        height: 22,
-                        child: Text(
-                          '1.Gün: Aktivasyon',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 20,
-                            height: 22 / 20,
-                            letterSpacing: 0,
-                            color: const Color(0xFF100F0F),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              '1.Gün: Aktivasyon',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 20,
+                                height: 22 / 20,
+                                letterSpacing: 0,
+                                color: const Color(0xFF100F0F),
+                              ),
+                            ),
                           ),
-                        ),
+                          Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () => Navigator.of(context).maybePop(),
+                              borderRadius: BorderRadius.circular(20),
+                              child: Container(
+                                width: 40,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: Colors.black,
+                                    width: 1,
+                                  ),
+                                ),
+                                child: const Icon(
+                                  Icons.close,
+                                  size: 20,
+                                  color: Color(0xFF100F0F),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 16),
-                      Wrap(
-                        spacing: 8,
-                        runSpacing: 8,
-                        children: const [
-                          _InfoChip(label: '30 Dakika'),
-                          _InfoChip(label: 'Bölge: Karın'),
-                          _InfoChip(label: '8 Egzersiz'),
-                        ],
+                      Center(
+                        child: Wrap(
+                          alignment: WrapAlignment.center,
+                          spacing: 10,
+                          runSpacing: 10,
+                          children: const [
+                            _InfoChip(label: '30 Dakika'),
+                            _InfoChip(label: 'Bölge: Karın'),
+                            _InfoChip(label: '8 Egzersiz'),
+                          ],
+                        ),
                       ),
                       const SizedBox(height: 40),
                       SizedBox(
@@ -668,13 +710,24 @@ class WorkoutDayDetailPage extends StatelessWidget {
                       const SizedBox(height: 4),
                       Expanded(
                         child: SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              for (final exercise in exercises) ...[
-                                _ExerciseDetailCard(exercise: exercise),
-                                const SizedBox(height: 8),
-                              ],
-                            ],
+                          child: Center(
+                            child: ConstrainedBox(
+                              constraints: BoxConstraints(
+                                maxWidth: MediaQuery.of(context).size.width - 24,
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  for (var i = 0; i < exercises.length; i++) ...[
+                                    _ExerciseDetailCard(
+                                      exercise: exercises[i],
+                                      thumbnailAsset: WorkoutProgramView._programThumbnails[i % 19],
+                                    ),
+                                    const SizedBox(height: 8),
+                                  ],
+                                ],
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -745,6 +798,7 @@ class WorkoutDayDetailPage extends StatelessWidget {
                   ),
                 ),
               ),
+            ),
             ],
           ),
         ),
@@ -1165,46 +1219,43 @@ class _InfoChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 108,
-      height: 34,
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
         color: const Color(0xFFF8F8F8),
-        borderRadius: BorderRadius.circular(6),
+        borderRadius: BorderRadius.circular(10),
         border: Border.all(
           color: const Color(0xFFEBEBEB),
           width: 1,
         ),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           if (label == '30 Dakika') ...[
             SvgPicture.asset(
               'assets/images/icons/iconstack.io - (Clock).svg',
-              width: 14,
-              height: 14,
+              width: 18,
+              height: 18,
               fit: BoxFit.contain,
             ),
-            const SizedBox(width: 4),
+            const SizedBox(width: 6),
           ] else if (label.startsWith('Bölge')) ...[
             SvgPicture.asset(
               'assets/images/icons/iconstack.io - (Dumbbell Large).svg',
-              width: 14,
-              height: 14,
+              width: 18,
+              height: 18,
               fit: BoxFit.contain,
             ),
-            const SizedBox(width: 4),
+            const SizedBox(width: 6),
           ] else if (label.contains('Egzersiz')) ...[
             SvgPicture.asset(
               'assets/images/icons/iconstack.io - (Back Muscle Body).svg',
-              width: 14,
-              height: 14,
+              width: 18,
+              height: 18,
               fit: BoxFit.contain,
             ),
-            const SizedBox(width: 4),
+            const SizedBox(width: 6),
           ],
           Flexible(
             child: Text(
@@ -1213,7 +1264,7 @@ class _InfoChip extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: GoogleFonts.montserrat(
                 fontWeight: FontWeight.w600,
-                fontSize: label.startsWith('Bölge') ? 12 : 13,
+                fontSize: 14,
                 height: 1.1,
                 letterSpacing: 0,
                 color: const Color(0xFF100F0F),
@@ -1228,38 +1279,43 @@ class _InfoChip extends StatelessWidget {
 
 class _ExerciseDetailCard extends StatelessWidget {
   final _WorkoutExercise exercise;
+  final String thumbnailAsset;
 
-  const _ExerciseDetailCard({super.key, required this.exercise});
+  const _ExerciseDetailCard({
+    super.key,
+    required this.exercise,
+    required this.thumbnailAsset,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 342,
+      width: double.infinity,
       decoration: BoxDecoration(
         color: const Color(0xFFFFFFFF),
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(18),
         border: Border.all(
           color: const Color(0xFFEBEBEB),
           width: 1,
         ),
       ),
-      height: 70,
+      height: 88,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: Row(
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(12),
               child: SizedBox(
-                width: 64,
-                height: 54,
+                width: 76,
+                height: 64,
                 child: Image.asset(
-                  'assets/images/resimler/1.gun.jpg',
+                  thumbnailAsset,
                   fit: BoxFit.cover,
                 ),
               ),
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: 14),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -1271,20 +1327,20 @@ class _ExerciseDetailCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.w600,
-                      fontSize: 16,
+                      fontSize: 17,
                       height: 1.1,
                       letterSpacing: 0,
                       color: const Color(0xFF100F0F),
                     ),
                   ),
-                  const SizedBox(height: 2),
+                  const SizedBox(height: 4),
                   Text(
                     exercise.repeatInfo,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.w500,
-                      fontSize: 11,
+                      fontSize: 12,
                       height: 1.1,
                       letterSpacing: 0,
                       color: const Color(0xFF100F0F),
@@ -1297,7 +1353,7 @@ class _ExerciseDetailCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.w500,
-                      fontSize: 11,
+                      fontSize: 12,
                       height: 1.1,
                       letterSpacing: 0,
                       color: const Color(0xFF686868),

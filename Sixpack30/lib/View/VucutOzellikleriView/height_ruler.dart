@@ -105,70 +105,62 @@ class _HeightRulerState extends State<HeightRuler> {
                 ),
               ],
             ),
+            // Seçili boy değeri çizginin üzerinde: önce sayı, hemen altında yeşil çizgi (çizgi cetvel ortasında)
             Positioned(
               left: 0,
               right: 0,
-              top: (constraints.maxHeight - 29) / 2,
+              top: (constraints.maxHeight / 2) - 33.65,
               child: IgnorePointer(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const Expanded(child: SizedBox()),
-                    SizedBox(
-                      width: 72,
-                      height: 29,
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: Text.rich(
-                          TextSpan(
-                            style: const TextStyle(
-                              fontFamily: AppFont.montserrat,
-                              fontWeight: FontWeight.w700,
-                              height: 1.0,
-                              letterSpacing: 0,
-                              color: Color(0xFF000000),
-                            ),
-                            children: [
-                              if (widget.heightUnit == HeightUnit.cm) ...[
-                                TextSpan(
-                                  text: '${widget.selectedHeightCm}',
-                                  style: const TextStyle(fontSize: 24),
-                                ),
-                                const TextSpan(
-                                  text: ' ',
-                                  style: TextStyle(fontSize: 15.61),
-                                ),
-                                const TextSpan(
-                                  text: 'cm',
-                                  style: TextStyle(fontSize: 15.61),
-                                ),
-                              ] else ...[
-                                TextSpan(
-                                  text: formatHeightFeetInches(
-                                    heightCmToFeetInches(widget.selectedHeightCm).$1,
-                                    heightCmToFeetInches(widget.selectedHeightCm).$2,
-                                  ),
-                                  style: const TextStyle(fontSize: 22),
-                                ),
-                              ],
-                            ],
+                    Center(
+                      child: Text.rich(
+                        TextSpan(
+                          style: const TextStyle(
+                            fontFamily: AppFont.montserrat,
+                            fontWeight: FontWeight.w700,
+                            height: 1.0,
+                            letterSpacing: 0,
+                            color: Color(0xFF000000),
                           ),
-                          textAlign: TextAlign.right,
+                          children: [
+                            if (widget.heightUnit == HeightUnit.cm) ...[
+                              TextSpan(
+                                text: '${widget.selectedHeightCm}',
+                                style: const TextStyle(fontSize: 24),
+                              ),
+                              const TextSpan(
+                                text: ' ',
+                                style: TextStyle(fontSize: 15.61),
+                              ),
+                              const TextSpan(
+                                text: 'cm',
+                                style: TextStyle(fontSize: 15.61),
+                              ),
+                            ] else ...[
+                              TextSpan(
+                                text: formatHeightFeetInches(
+                                  heightCmToFeetInches(widget.selectedHeightCm).$1,
+                                  heightCmToFeetInches(widget.selectedHeightCm).$2,
+                                ),
+                                style: const TextStyle(fontSize: 22),
+                              ),
+                            ],
+                          ],
                         ),
+                        textAlign: TextAlign.center,
                       ),
                     ),
-                    const SizedBox(width: 8),
-                    Expanded(
+                    const SizedBox(height: 4),
+                    Align(
+                      alignment: Alignment.centerRight,
                       child: Container(
-                        height: 0,
-                        margin: EdgeInsets.zero,
+                        width: 235,
+                        height: 1.3,
                         decoration: const BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              color: Color(0xFF00EF5B),
-                              width: 1.3,
-                            ),
-                          ),
+                          color: Color(0xFF00EF5B),
                         ),
                       ),
                     ),

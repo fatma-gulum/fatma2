@@ -101,82 +101,69 @@ class _WeightRulerState extends State<WeightRuler> {
                 ),
               ),
             ),
-            Positioned(
-              left: 0,
-              right: 0,
-              top: 0,
-              child: IgnorePointer(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Expanded(child: SizedBox()),
-                    SizedBox(
-                      width: 80,
-                      height: 29,
-                      child: Center(
-                        child: Text.rich(
-                          TextSpan(
-                            style: const TextStyle(
-                              fontFamily: AppFont.montserrat,
-                              fontWeight: FontWeight.w700,
-                              height: 1.0,
-                              letterSpacing: 0,
-                              color: Color(0xFF000000),
-                            ),
-                            children: [
-                              if (widget.weightUnit == WeightUnit.kg) ...[
-                                TextSpan(
-                                  text: widget.selectedWeightKg % 1 == 0
-                                      ? '${widget.selectedWeightKg.round()}'
-                                      : widget.selectedWeightKg.toStringAsFixed(1),
-                                  style: const TextStyle(fontSize: 24),
-                                ),
-                                const TextSpan(
-                                  text: ' ',
-                                  style: TextStyle(fontSize: 15.61),
-                                ),
-                                const TextSpan(
-                                  text: 'kg',
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                              ] else ...[
-                                TextSpan(
-                                  text: '${weightKgToLb(widget.selectedWeightKg)}',
-                                  style: const TextStyle(fontSize: 24),
-                                ),
-                                const TextSpan(
-                                  text: ' ',
-                                  style: TextStyle(fontSize: 15.61),
-                                ),
-                                const TextSpan(
-                                  text: 'lb',
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                              ],
-                            ],
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                    const Expanded(child: SizedBox()),
-                  ],
-                ),
-              ),
-            ),
+            // Kilo değeri çubuğun hemen üstünde (cetvel çubuğuna yakın)
             Positioned(
               left: 0,
               right: 0,
               top: 0,
               bottom: 0,
               child: IgnorePointer(
-                child: Center(
-                  child: Container(
-                    width: 2,
-                  // Orta gösterge çubuğunu cetvel yüksekliğinden daha kısa yap
-                  height: h * 0.6,
-                    margin: const EdgeInsets.symmetric(horizontal: 4),
-                  color: const Color(0xFF00EF5B),
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text.rich(
+                        TextSpan(
+                          style: const TextStyle(
+                            fontFamily: AppFont.montserrat,
+                            fontWeight: FontWeight.w700,
+                            height: 1.0,
+                            letterSpacing: 0,
+                            color: Color(0xFF000000),
+                          ),
+                          children: [
+                            if (widget.weightUnit == WeightUnit.kg) ...[
+                              TextSpan(
+                                text: widget.selectedWeightKg % 1 == 0
+                                    ? '${widget.selectedWeightKg.round()}'
+                                    : widget.selectedWeightKg.toStringAsFixed(1),
+                                style: const TextStyle(fontSize: 24),
+                              ),
+                              const TextSpan(
+                                text: ' ',
+                                style: TextStyle(fontSize: 15.61),
+                              ),
+                              const TextSpan(
+                                text: 'kg',
+                                style: TextStyle(fontSize: 16),
+                              ),
+                            ] else ...[
+                              TextSpan(
+                                text: '${weightKgToLb(widget.selectedWeightKg)}',
+                                style: const TextStyle(fontSize: 24),
+                              ),
+                              const TextSpan(
+                                text: ' ',
+                                style: TextStyle(fontSize: 15.61),
+                              ),
+                              const TextSpan(
+                                text: 'lb',
+                                style: TextStyle(fontSize: 16),
+                              ),
+                            ],
+                          ],
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 6),
+                      Container(
+                        width: 2,
+                        height: h * 0.6,
+                        margin: const EdgeInsets.symmetric(horizontal: 4),
+                        color: const Color(0xFF00EF5B),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -199,7 +186,7 @@ class _WeightRulerPainter extends CustomPainter {
   final WeightUnit weightUnit;
 
   static const _colorTick = Color(0xFFC2C2C2);
-  static const _colorLabel = Color(0xFF4A4A4A);
+  static const _colorLabel = Color(0xFFB1B1B1);
 
   @override
   void paint(Canvas canvas, Size size) {

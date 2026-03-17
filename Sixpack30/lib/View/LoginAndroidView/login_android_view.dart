@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sixpack30/Colors/app_colors.dart';
-import 'package:sixpack30/View/HedefOdakView/hedef_odak_view.dart';
+import 'package:sixpack30/View/HedefOdakView/hedef_odak_view.dart'; // Onboarding1View
 import 'package:sixpack30/Text/font.dart';
 import 'package:sixpack30/Text/height.dart';
 import 'package:sixpack30/Text/width.dart';
@@ -80,7 +80,7 @@ class LoginAndroidView extends StatelessWidget {
                           onPressed: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (_) => const HedefOdakView(),
+                                builder: (_) => const Onboarding1View(),
                               ),
                             );
                           },
@@ -103,7 +103,7 @@ class LoginAndroidView extends StatelessWidget {
                                 onPressed: () {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (_) => const HedefOdakView(),
+                                      builder: (_) => const Onboarding1View(),
                                     ),
                                   );
                                 },
@@ -120,7 +120,7 @@ class LoginAndroidView extends StatelessWidget {
                                 onPressed: () {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (_) => const HedefOdakView(),
+                                      builder: (_) => const Onboarding1View(),
                                     ),
                                   );
                                 },
@@ -135,7 +135,7 @@ class LoginAndroidView extends StatelessWidget {
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (_) => const HedefOdakView(),
+                            builder: (_) => const Onboarding1View(),
                           ),
                         );
                       },
